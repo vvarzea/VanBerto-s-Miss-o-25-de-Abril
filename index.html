@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,viewport-fit=cover" />
+  <meta name="description" content="VanBerto's — A Revolução dos Cravos: jogo educativo sobre o 25 de Abril de 1974 e a democratização de Portugal." />
+  <meta name="theme-color" content="#0a1a0a" />
+  <title>VanBerto's — A Revolução dos Cravos</title>
+  <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+
+  <!-- MODAL INICIAL -->
+  <div id="startOverlay" class="overlay">
+    <div class="card">
+      <div class="card-seal" aria-hidden="true">🌹</div>
+      <h1>🌹 A Revolução dos Cravos</h1>
+      <p class="sub"><strong>Professora:</strong> Vanda Várzea</p>
+      <p class="desc">
+        Ajuda o VanBerto's a descobrir a história do<br>
+        <strong>25 de Abril de 1974</strong>, o dia em que Portugal conquistou a liberdade!<br>
+        Apanha cravos, evita os censores e abre a porta respondendo corretamente.
+      </p>
+      <hr class="start-divider" />
+      <div class="name-row">
+        <label for="playerName">O teu nome:</label>
+        <input type="text" id="playerName" maxlength="20" placeholder="Escreve o teu nome…" autocomplete="off" />
+      </div>
+      <div class="row">
+        <button id="btnStart" class="btn primary">▶ Começar</button>
+        <button id="btnHow" class="btn">Como jogar ❓</button>
+        <button id="btnMute" class="btn">🔊 Som: ON</button>
+        <button id="btnFullscreen" class="btn">⛶ Ecrã todo</button>
+      </div>
+      <p class="tiny">
+        PC: ← → para andar e ↑/Espaço para saltar · F para ecrã inteiro.<br>
+        Tablet/telemóvel: mantém o dedo no lado esquerdo/direito para andar e faz um toque rápido para saltar.
+      </p>
+    </div>
+  </div>
+
+  <!-- MODAL COMO JOGAR -->
+  <div id="howOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Como jogar">
+    <div class="card">
+      <h2>Como jogar</h2>
+      <ul class="list">
+        <li>🌹 Apanha cravos, jornais e rádios para ganhar pontos</li>
+        <li>⭐ O <strong>cravo dourado</strong> dá "super modo" (ficar maior e protegido)</li>
+        <li>❤️ O <strong>coração</strong> dá +1 vida (máximo de 5)</li>
+        <li>Evita os censores 🔴 (se tocares, perdes uma vida)</li>
+        <li>Chega à porta 🗳️ e responde à pergunta para avançar</li>
+      </ul>
+      <hr style="border:none;border-top:1px solid #8b0000;margin:10px 0">
+      <p style="margin:6px 0;font-weight:700;font-size:13px;font-family:'Cinzel',serif">🖥️ PC / Teclado</p>
+      <p style="margin:2px 0;font-size:12px;font-style:italic">← → para andar &nbsp;|&nbsp; ↑ ou Espaço para saltar &nbsp;|&nbsp; H para alto contraste &nbsp;|&nbsp; F para ecrã inteiro</p>
+      <p style="margin:8px 0 2px;font-weight:700;font-size:13px;font-family:'Cinzel',serif">📱 Tablet / Telemóvel</p>
+      <p style="margin:2px 0 8px;font-size:12px;font-style:italic">Mantém o dedo no lado esquerdo/direito para andar · Toque rápido para saltar</p>
+      <button id="btnCloseHow" class="btn primary">Entendido!</button>
+    </div>
+  </div>
+
+  <!-- MODAL PERGUNTA -->
+  <div id="quizOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-labelledby="quizQuestion">
+    <div class="card">
+      <div class="card-seal" aria-hidden="true">🌹</div>
+      <div class="quiz-attempts" id="quizAttempts" aria-hidden="true"></div>
+      <p id="quizQuestion" class="q" aria-live="polite"></p>
+      <div id="quizAnswers" class="answers" role="group" aria-label="Opções de resposta"></div>
+      <p id="quizFeedback" class="feedback" aria-live="assertive"></p>
+      <p id="quizExplanation" class="explanation hidden"></p>
+      <button id="btnCloseQuiz" class="btn hidden">Continuar</button>
+    </div>
+  </div>
+
+  <!-- CONTROLOS DO PROFESSOR -->
+  <div id="teacherControls" style="position:fixed;top:12px;right:12px;z-index:1000;display:flex;gap:8px;flex-wrap:wrap;">
+    <button id="btnContrast" class="btn" aria-pressed="false" title="Alto contraste (tecla H)">🌗 Contraste</button>
+    <button id="btnPresent" class="btn" title="Modo apresentação">📽️ Apresentação</button>
+    <button id="btnFullscreenGame" class="btn" title="Ecrã todo (tecla F)">⛶ Ecrã todo</button>
+    <button id="btnPause" class="btn">⏸ Pausa</button>
+    <button id="btnRestartLevel" class="btn">🔄 Nível</button>
+    <button id="btnRestartGame" class="btn">🔁 Recomeçar</button>
+  </div>
+
+  <!-- MODAL HISTÓRIA (entre níveis) -->
+  <div id="historyOverlay" class="overlay hidden">
+    <div class="card history-card">
+      <div class="history-header">
+        <span class="history-icon">🌹</span>
+        <div>
+          <h2>25 de Abril de 1974</h2>
+          <p class="history-subtitle">Sabias que…?</p>
+        </div>
+      </div>
+      <div class="chapter-progress" id="chapterProgress" aria-hidden="true"></div>
+      <p id="historyText" class="history-text"></p>
+      <div class="row">
+        <button id="btnHistory" class="btn primary">Continuar ▶</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- LEGENDA -->
+  <div id="legend" class="hidden" aria-label="Legenda de ícones">
+    🌹 <small>cravo</small> &nbsp; 📰 <small>jornal</small> &nbsp; 📻 <small>rádio</small> &nbsp; ⭐ <small>super modo</small> &nbsp; ❤️ <small>+1 vida</small> &nbsp; 🔴 <small>perigo</small>
+  </div>
+
+  <div id="game"></div>
+
+  <!-- GAME OVER -->
+  <div id="gameOverOverlay" class="overlay hidden">
+    <div class="card gameover-card">
+      <div class="gameover-icon">💀</div>
+      <h2>Missão Falhada!</h2>
+      <p class="sub">Ficaste sem vidas! A liberdade conquista-se com persistência!</p>
+      <div class="row">
+        <button id="btnRetry" class="btn primary">🔄 Tentar de novo</button>
+        <button id="btnExit" class="btn">🏠 Menu</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- VITÓRIA FINAL -->
+  <div id="winOverlay" class="overlay hidden" role="dialog" aria-modal="true">
+    <div class="card win-card">
+      <div class="win-icon">🏆</div>
+      <h2>Missão Concluída!</h2>
+      <p class="win-name">Parabéns, <span id="winPlayerName">Historiador Digital</span>!</p>
+      <div class="win-stats-grid">
+        <div class="win-stat-box">
+          <span class="stat-label">Pontos</span>
+          <span class="stat-value">🌹 <strong id="winScore">0</strong></span>
+        </div>
+        <div class="win-stat-box">
+          <span class="stat-label">Quiz</span>
+          <span class="stat-value" id="winPct">—</span>
+        </div>
+        <div class="win-stat-box medal-box">
+          <span class="stat-label">Classificação</span>
+          <span class="stat-value" id="winMedal">🥇 Excelente!</span>
+        </div>
+      </div>
+      <details id="winErrors" style="margin:10px 0;display:none;">
+        <summary style="cursor:pointer;font-weight:700;font-size:12px;color:#8b0000;font-style:italic;font-family:'Cinzel',serif">📋 Ver erros (para a professora)</summary>
+        <ul id="winErrorList" style="margin:8px 0 0 16px;font-size:12px;line-height:1.8;color:#2a1a0a;"></ul>
+      </details>
+      <div class="row">
+        <button id="btnWinRestart" class="btn primary">🔄 Jogar de novo</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- STREAK BADGE -->
+  <div id="streakBadge" aria-live="polite" aria-atomic="true"></div>
+
+  <!-- CONFETIS -->
+  <div id="confetti" class="confetti hidden" aria-hidden="true"></div>
+
+  <!-- BOTÕES TOUCH -->
+  <div id="touchControls">
+    <div class="tc-left">
+      <div class="tc-btn-wrap"><button id="btnLeft"  class="touch-btn" aria-label="Mover esquerda">◀</button><span class="tc-label">Esq</span></div>
+      <div class="tc-btn-wrap"><button id="btnRight" class="touch-btn" aria-label="Mover direita">▶</button><span class="tc-label">Dir</span></div>
+    </div>
+    <div class="tc-right">
+      <div class="tc-btn-wrap"><button id="btnJump" class="touch-btn touch-jump" aria-label="Saltar">↑</button><span class="tc-label">Saltar</span></div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3/dist/phaser.js"></script>
+  <script src="index.js"></script>
+</body>
+</html>

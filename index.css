@@ -1,0 +1,690 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,600;1,400&display=swap');
+
+html, body {
+  margin: 0; padding: 0;
+  background: #0a1a0a;
+  font-family: 'Lora', Georgia, serif;
+  overflow: hidden;
+  height: 100dvh;
+}
+
+#game { width: 100vw; height: 100dvh; }
+canvas { width: 100% !important; height: 100% !important; display: block; touch-action: none; }
+
+/* =====================================================
+   OVERLAY — efeito de luz de liberdade animado
+   ===================================================== */
+.overlay {
+  position: fixed; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2000; padding: 16px;
+  background:
+    radial-gradient(ellipse 70% 60% at 50% 48%,
+      rgba(180,30,30,0.18) 0%, rgba(8,20,8,0) 55%, rgba(4,12,4,0.92) 100%),
+    rgba(6,14,6,0.88);
+  animation: freedomGlow 6s ease-in-out infinite;
+  backdrop-filter: blur(2px);
+  /* Scroll em ecrãs muito pequenos */
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-height: 600px) {
+  .overlay { align-items: flex-start; padding: 8px 12px; }
+}
+
+@keyframes freedomGlow {
+  0%,100% { background:
+    radial-gradient(ellipse 70% 60% at 50% 48%,
+      rgba(180,30,30,0.16) 0%, rgba(8,20,8,0) 55%, rgba(4,12,4,0.90) 100%),
+    rgba(6,14,6,0.86); }
+  30% { background:
+    radial-gradient(ellipse 68% 58% at 51% 46%,
+      rgba(200,40,40,0.20) 0%, rgba(8,20,8,0) 55%, rgba(4,12,4,0.92) 100%),
+    rgba(6,14,6,0.86); }
+  65% { background:
+    radial-gradient(ellipse 72% 62% at 49% 50%,
+      rgba(30,100,30,0.14) 0%, rgba(8,20,8,0) 55%, rgba(4,12,4,0.88) 100%),
+    rgba(6,14,6,0.86); }
+}
+
+.hidden { display: none; }
+
+/* =====================================================
+   CARD — documento histórico com textura de papel
+   ===================================================== */
+.card {
+  width: min(580px, 96vw);
+  max-height: calc(100dvh - 32px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(139,0,0,0.3) transparent;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E"),
+    linear-gradient(160deg, #fdf6e3 0%, #f5e6c8 60%, #ede0b8 100%);
+  border: 3px solid #8b0000;
+  border-radius: 4px;
+  box-shadow:
+    8px 8px 0 #3b0a0a,
+    0 0 60px rgba(180,30,30,0.25),
+    inset 0 1px 0 rgba(255,255,255,0.55),
+    inset 0 -1px 0 rgba(120,10,10,0.12);
+  padding: 22px 22px 16px;
+  position: relative;
+  animation: cardPop 0.28s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* Cantos decorativos */
+.card::before {
+  content: '❧';
+  position: absolute;
+  top: 8px; left: 12px;
+  font-size: 22px; color: #8b0000; opacity: 0.45;
+}
+.card::after {
+  content: '❧';
+  position: absolute;
+  bottom: 8px; right: 12px;
+  font-size: 22px; color: #006400; opacity: 0.45;
+  transform: rotate(180deg);
+}
+
+/* Selo decorativo */
+.card-seal {
+  position: absolute;
+  top: 10px; right: 10px;
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  border: 2px solid rgba(139,0,0,0.35);
+  background:
+    radial-gradient(circle at 40% 35%, rgba(255,200,200,0.55), rgba(200,100,100,0.2)),
+    repeating-conic-gradient(rgba(139,0,0,0.10) 0deg 9deg, transparent 9deg 18deg);
+  box-shadow: inset 0 0 6px rgba(139,0,0,0.2), 0 1px 4px rgba(0,0,0,0.15);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; color: #8b0000; opacity: 0.65;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes cardPop {
+  from { transform: scale(0.9) rotate(-1deg); opacity: 0; }
+  to   { transform: scale(1)   rotate(0deg);  opacity: 1; }
+}
+
+.card h1 {
+  font-family: 'Cinzel', serif;
+  font-size: 20px; font-weight: 900;
+  color: #8b0000; margin: 0 0 10px;
+  text-align: center; letter-spacing: 0.5px;
+  border-bottom: 2px solid #8b0000;
+  padding-bottom: 8px;
+  text-shadow: 0 1px 2px rgba(139,0,0,0.15);
+}
+.card h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 17px; font-weight: 700;
+  color: #8b0000; margin: 0 0 10px;
+  text-align: center;
+  text-shadow: 0 1px 2px rgba(139,0,0,0.12);
+}
+
+.sub  { margin: 0 0 10px; color: #5c1a1a; font-size: 14px; }
+.desc { margin: 8px 0 4px; color: #2a1a0a; font-size: 14px; line-height: 1.6; }
+
+.row {
+  display: flex; gap: 10px; justify-content: center;
+  margin-top: 14px; flex-wrap: wrap;
+}
+
+/* =====================================================
+   BOTÕES — estilo patriótico
+   ===================================================== */
+.btn {
+  font-family: 'Cinzel', serif;
+  border: 2.5px solid #8b0000;
+  background: linear-gradient(180deg, #fdf0d0 0%, #f0ddb0 100%);
+  color: #3b0a0a;
+  border-radius: 3px;
+  padding: 9px 16px;
+  font-weight: 700; font-size: 13px;
+  cursor: pointer;
+  box-shadow: 4px 4px 0 #3b0a0a, inset 0 1px 0 rgba(255,255,255,0.6);
+  user-select: none; letter-spacing: 0.4px;
+  transition: background 0.12s, transform 0.08s, box-shadow 0.08s, border-color 0.12s;
+  position: relative; overflow: hidden;
+}
+.btn::after {
+  content: '';
+  position: absolute; inset: 0;
+  background: rgba(255,255,255,0);
+  transition: background 0.15s;
+  border-radius: 2px;
+  pointer-events: none;
+}
+.btn:hover:not(:disabled)::after { background: rgba(255,255,255,0.12); }
+.btn:hover:not(:disabled) {
+  background: linear-gradient(180deg, #fef6dc 0%, #f5e8c0 100%);
+  transform: translate(-1px, -1px);
+  box-shadow: 5px 5px 0 #3b0a0a, inset 0 1px 0 rgba(255,255,255,0.7);
+  border-color: #6b0000;
+}
+.btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0 #3b0a0a;
+}
+.btn:disabled { cursor: default; opacity: 0.6; }
+
+.btn.primary {
+  background: linear-gradient(180deg, #cc2222 0%, #8b0000 100%);
+  color: #fdf6e3;
+  border-color: #3b0a0a;
+  box-shadow: 4px 4px 0 #3b0a0a, inset 0 1px 0 rgba(255,180,180,0.3);
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+.btn.primary:hover:not(:disabled) {
+  background: linear-gradient(180deg, #dd3333 0%, #9b0000 100%);
+}
+
+#quizAnswers .btn {
+  width: 100%; text-align: center; font-size: 13px;
+  transition: background 0.18s, border-color 0.18s, opacity 0.18s, transform 0.08s, box-shadow 0.12s;
+}
+#quizAnswers .btn.correct-answer {
+  background: linear-gradient(180deg,#4caf50,#2e7d32) !important;
+  border-color: #1a5c1a !important;
+  color: #fff !important;
+  box-shadow: 4px 4px 0 #1a5c1a, 0 0 18px rgba(76,175,80,0.5) !important;
+  animation: correctPulse 0.4s ease-out both;
+}
+#quizAnswers .btn.wrong-answer {
+  animation: shakeWrong 0.4s ease-out both;
+  background: linear-gradient(180deg,#cc3333,#8b0000) !important;
+  color: #fff !important;
+  border-color: #5a0000 !important;
+}
+@keyframes correctPulse {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.04) translate(-1px,-1px); }
+  100% { transform: scale(1) translate(-1px,-1px); }
+}
+@keyframes shakeWrong {
+  0%,100% { transform: translateX(0); }
+  20%  { transform: translateX(-5px); }
+  40%  { transform: translateX(5px); }
+  60%  { transform: translateX(-4px); }
+  80%  { transform: translateX(4px); }
+}
+
+.tiny {
+  margin-top: 12px; font-size: 11px;
+  color: #5c1a1a; opacity: 0.85; font-style: italic;
+}
+.list { margin: 10px 0 0 20px; color: #2a1a0a; font-size: 13px; line-height: 1.8; }
+.q { font-weight: 600; color: #2a1a0a; font-size: 14px; line-height: 1.5; }
+.answers { display: grid; gap: 8px; margin: 12px 0; }
+.feedback { min-height: 22px; font-weight: 700; white-space: pre-line; font-size: 13px; }
+.explanation {
+  background: rgba(139,0,0,0.06);
+  border-left: 3px solid #8b0000;
+  border-radius: 2px; padding: 8px 12px;
+  font-size: 12px; font-style: italic;
+  color: #2a1a0a; margin: 4px 0 8px; line-height: 1.6;
+}
+
+/* =====================================================
+   CARD DA HISTÓRIA — escuro com acento verde/vermelho
+   ===================================================== */
+.history-card {
+  width: min(600px, 96vw) !important;
+  background: linear-gradient(160deg, #fffbf0 0%, #fdf3d8 100%) !important;
+  border: 3px solid #cc2222 !important;
+  box-shadow: 6px 6px 0 rgba(139,0,0,0.25), inset 0 1px 0 rgba(255,255,255,0.8) !important;
+  color: #2a1a0a;
+}
+.history-card h2   { color: #8b0000 !important; text-shadow: none; }
+.history-card .history-subtitle { color: #cc4444 !important; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; font-family: 'Cinzel', serif; }
+.history-header {
+  display: flex; align-items: center; gap: 14px; margin-bottom: 12px;
+  border-bottom: 2px solid rgba(204,34,34,0.3); padding-bottom: 10px;
+}
+
+/* Progresso dos capítulos */
+.chapter-progress {
+  display: flex; gap: 5px; justify-content: center;
+  margin: 10px 0 4px; flex-wrap: wrap;
+}
+.chapter-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  border: 2px solid rgba(139,0,0,0.35);
+  background: rgba(139,0,0,0.12);
+  transition: all 0.3s ease;
+}
+.chapter-dot.done {
+  background: #8b0000;
+  border-color: #5a0000;
+  box-shadow: 0 0 6px rgba(139,0,0,0.4);
+}
+.chapter-dot.current {
+  background: #cc2222;
+  border-color: #8b0000;
+  box-shadow: 0 0 10px rgba(204,34,34,0.6);
+  transform: scale(1.3);
+}
+.chapter-dot.future { opacity: 0.4; }
+.history-icon { font-size: 36px; flex-shrink: 0; }
+.history-subtitle { margin: 2px 0 0; font-size: 13px; font-style: italic; color: #cc4444; }
+.history-text {
+  font-size: 14px; line-height: 1.85; color: #2a1a0a;
+  white-space: pre-line; max-height: 50vh; overflow-y: auto;
+  scrollbar-width: thin; scrollbar-color: rgba(204,34,34,0.3) transparent;
+  background: rgba(139,0,0,0.04);
+  border-left: 3px solid #cc2222;
+  border-radius: 2px; padding: 12px 14px;
+  font-style: italic;
+  animation: textReveal 0.55s ease-out both;
+  animation-delay: 0.1s;
+}
+
+@keyframes textReveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.history-title {
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 15px;
+  color: #8b0000; display: block; margin-bottom: 8px;
+  font-style: normal; letter-spacing: 0.3px;
+  animation: titleReveal 0.35s ease-out both;
+}
+
+@keyframes titleReveal {
+  from { opacity: 0; transform: translateX(-10px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.history-card .btn.primary { background: linear-gradient(180deg,#cc2222,#8b0000) !important; border-color:#3b0a0a !important; }
+
+/* =====================================================
+   GAME OVER
+   ===================================================== */
+.gameover-card {
+  text-align: center;
+  background: linear-gradient(135deg, #fff0f0, #fde0e0) !important;
+  border: 3px solid #c0392b !important;
+  box-shadow: 6px 6px 0 rgba(192,57,43,0.25) !important;
+  color: #3a0808;
+}
+.gameover-card h2 { color: #8b0000 !important; font-size: 26px; margin: 0 0 8px; text-shadow: none; }
+.gameover-card .sub { color: #5a1a1a; font-style: italic; }
+.gameover-icon { font-size: 52px; margin-bottom: 8px; animation: pulse 1s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.1)} }
+.gameover-card .btn.primary { background: linear-gradient(180deg,#cc4444,#8b2222) !important; border-color:#c0392b !important; color:white !important; }
+
+/* =====================================================
+   VITÓRIA
+   ===================================================== */
+.win-card {
+  text-align: center;
+  background: linear-gradient(135deg, #f0fff0 0%, #e0f8e8 60%, #d8f0e0 100%) !important;
+  border: 3px solid #cc2222 !important;
+  box-shadow: 8px 8px 0 rgba(139,0,0,0.22), 0 0 40px rgba(139,0,0,0.12) !important;
+  color: #0a2a0a;
+}
+.win-card h2 { color: #8b0000 !important; font-size: 24px; margin: 0 0 6px; font-family:'Cinzel',serif; text-shadow: none; }
+.win-icon { font-size: 58px; margin-bottom: 6px; animation: bounce 0.8s ease-in-out infinite alternate; }
+@keyframes bounce { from{transform:translateY(0)} to{transform:translateY(-10px)} }
+.win-name { font-size: 15px; color: #1a4a1a; margin: 0 0 14px; font-style: italic; }
+.win-name span { font-weight: 700; color: #ff9090; font-style: normal; }
+.win-stats { display: flex; flex-direction: column; gap: 8px; margin: 0 0 14px; }
+.win-stat { font-size: 14px; color: #1a3a1a; background: rgba(204,34,34,0.08); border: 1px solid rgba(204,34,34,0.15); border-radius: 3px; padding: 7px 12px; }
+.win-medal { font-size: 16px; font-weight: 700; color: #8b0000; background: rgba(204,34,34,0.08); }
+.win-card .btn.primary { background: linear-gradient(180deg,#cc2222,#8b0000) !important; border-color:#3b0a0a !important; color:#fff !important; font-size:14px; }
+
+/* =====================================================
+   CONFETIS
+   ===================================================== */
+.confetti { position:fixed; inset:0; pointer-events:none; z-index:3000; overflow:hidden; }
+.confetti.hidden { display:none; }
+.confetti span { position:absolute; top:-10vh; font-size:20px; animation:confettiFall linear forwards; will-change:transform; }
+@keyframes confettiFall {
+  0%   { transform:translateY(-10vh) rotate(0deg);   opacity:1; }
+  100% { transform:translateY(120vh) rotate(540deg); opacity:0.9; }
+}
+
+/* =====================================================
+   LEGENDA
+   ===================================================== */
+#legend {
+  position: fixed; left: 50%; transform: translateX(-50%);
+  bottom: 12px; z-index: 1000;
+  background: rgba(253,246,227,0.96);
+  border: 2px solid #8b0000; border-radius: 4px;
+  padding: 5px 12px;
+  font-family: 'Lora', serif; font-size: 12px; font-weight: 600;
+  color: #2a1a0a;
+  box-shadow: 3px 3px 0 #3b0a0a, 0 2px 12px rgba(0,0,0,0.15);
+  user-select: none; max-width: min(560px,92vw);
+  white-space: nowrap; text-align: center;
+}
+#legend small { font-weight: 400; opacity: 0.85; font-style: italic; }
+
+@media (max-width: 520px) {
+  #legend { bottom:auto; top:8px; font-size:10px; padding:4px 8px; }
+}
+
+/* =====================================================
+   RESPONSIVO — MOBILE / TABLETS PEQUENOS
+   ===================================================== */
+@media (max-width: 480px) {
+  .card { padding: 14px 14px 12px; }
+  .card h1 { font-size: 17px; }
+  .card h2 { font-size: 15px; }
+  .desc, .sub { font-size: 13px; }
+  .q { font-size: 13px; }
+  .btn { font-size: 12px; padding: 8px 12px; }
+  .history-text { font-size: 13px; }
+  .win-card h2, .gameover-card h2 { font-size: 20px; }
+  .win-icon, .gameover-icon { font-size: 42px; }
+}
+
+@media (max-height: 500px) {
+  .card { padding: 10px 14px 8px; }
+  .card h1 { font-size: 16px; margin-bottom: 6px; padding-bottom: 5px; }
+  .card h2 { font-size: 14px; margin-bottom: 6px; }
+  .card-seal { display: none; }
+  .desc { font-size: 12px; margin: 4px 0 2px; }
+  .tiny { margin-top: 6px; }
+  .row { margin-top: 8px; gap: 6px; }
+  .history-text { font-size: 12px; line-height: 1.6; max-height: 35vh; }
+}
+
+/* =====================================================
+   CONTROLOS PROFESSOR
+   ===================================================== */
+#teacherControls { display: none !important; }
+body.game-started #teacherControls { display: flex !important; }
+body.presentation-mode #teacherControls { opacity:0.3; }
+body.presentation-mode #teacherControls:hover { opacity:1; }
+body.presentation-mode #legend { display:none !important; }
+body.presentation-mode #touchControls { display:none !important; }
+
+/* =====================================================
+   ALTO CONTRASTE
+   ===================================================== */
+body.high-contrast { filter: contrast(1.35) brightness(1.08); }
+
+/* =====================================================
+   FLASH AO PERDER VIDA
+   ===================================================== */
+#hitFlash {
+  position:fixed; inset:0; z-index:5000;
+  background:rgba(192,57,43,0); pointer-events:none; transition:background 0.08s;
+}
+#hitFlash.active { background:rgba(192,57,43,0.38); }
+
+/* =====================================================
+   ESTRELAS DE BÓNUS
+   ===================================================== */
+#bonusStars {
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%);
+  z-index:4000; pointer-events:none;
+  font-family:'Cinzel',serif; font-size:26px; font-weight:900;
+  color:#ff9090; text-align:center; white-space:pre-line;
+  text-shadow:0 2px 12px rgba(0,0,0,0.6); opacity:0; transition:opacity 0.2s;
+}
+#bonusStars.show { opacity:1; }
+
+/* =====================================================
+   NOME DO JOGADOR
+   ===================================================== */
+.name-row { display:flex; align-items:center; gap:10px; margin:10px 0 4px; flex-wrap:wrap; }
+.name-row label { font-family:'Cinzel',serif; font-weight:700; font-size:13px; white-space:nowrap; color:#3b0a0a; }
+.name-row input {
+  flex:1; min-width:140px; border:2px solid #8b0000; border-radius:3px;
+  padding:7px 12px; font-size:14px; font-family:'Lora',serif;
+  background:#fdf6e3;
+  box-shadow:2px 2px 0 #8b0000, inset 0 1px 3px rgba(139,0,0,0.08);
+  outline:none; color:#2a1a0a;
+  transition: box-shadow 0.15s;
+}
+.name-row input:focus {
+  box-shadow: 2px 2px 0 #3b0a0a, 0 0 0 3px rgba(204,34,34,0.25), inset 0 1px 3px rgba(139,0,0,0.08);
+}
+
+/* =====================================================
+   TOUCH CONTROLS
+   ===================================================== */
+#touchControls {
+  display:none; position:fixed; bottom:18px; left:0; right:0;
+  z-index:900; pointer-events:none; padding:0 20px;
+  justify-content:space-between; align-items:flex-end;
+}
+@media (hover:none) and (pointer:coarse) {
+  body.game-started #touchControls { display:flex; }
+}
+/* Fallback para smartphones que não detetam hover:none corretamente */
+@media (max-width: 768px) {
+  body.game-started #touchControls { display:flex; }
+}
+.tc-left  { display:flex; gap:14px; pointer-events:none; align-items:flex-end; }
+.tc-right { pointer-events:none; }
+
+.tc-btn-wrap {
+  display: flex; flex-direction: column; align-items: center; gap: 5px;
+  pointer-events: none;
+}
+.tc-btn-wrap .touch-btn { pointer-events: all; }
+.tc-label {
+  font-family: 'Cinzel', serif; font-size: 9px; font-weight: 700;
+  color: rgba(255,140,140,0.75); letter-spacing: 1px; text-transform: uppercase;
+  user-select: none; text-shadow: 0 1px 3px rgba(0,0,0,0.7); pointer-events: none;
+}
+
+.touch-btn {
+  pointer-events:all;
+  width:72px; height:72px; border-radius:50%;
+  border:2.5px solid rgba(255,120,120,0.65);
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255,180,180,0.22), transparent 58%),
+    rgba(10,6,6,0.75);
+  color:#f5e6e6;
+  font-size:28px; font-weight:900;
+  display:flex; align-items:center; justify-content:center;
+  box-shadow:
+    0 6px 20px rgba(0,0,0,0.55),
+    0 2px 6px rgba(0,0,0,0.3),
+    inset 0 1px 0 rgba(255,150,150,0.22),
+    inset 0 -2px 5px rgba(0,0,0,0.35);
+  user-select:none; -webkit-tap-highlight-color:transparent; cursor:pointer;
+  transition: background 0.1s, transform 0.08s, box-shadow 0.08s;
+  touch-action:manipulation;
+  backdrop-filter: blur(3px);
+}
+
+.touch-btn.pressed {
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255,80,80,0.38), transparent 55%),
+    rgba(180,30,30,0.42);
+  transform: scale(0.88);
+  border-color: rgba(255,120,120,0.95);
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.4),
+    inset 0 2px 4px rgba(0,0,0,0.25);
+}
+
+.touch-jump {
+  width:82px; height:82px; font-size:30px;
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255,160,160,0.32), transparent 55%),
+    rgba(180,30,30,0.25);
+  border-color: rgba(255,120,120,0.82);
+  border-width: 3px;
+  box-shadow:
+    0 6px 24px rgba(0,0,0,0.5),
+    0 0 16px rgba(180,30,30,0.22),
+    inset 0 1px 0 rgba(255,150,150,0.35),
+    inset 0 -2px 5px rgba(0,0,0,0.28);
+}
+.touch-jump.pressed {
+  background:
+    radial-gradient(circle at 38% 32%, rgba(255,80,80,0.48), transparent 55%),
+    rgba(204,34,34,0.52);
+}
+
+/* Touch buttons menores em ecrãs muito pequenos */
+@media (max-width: 360px) {
+  .touch-btn { width: 58px; height: 58px; font-size: 22px; }
+  .touch-jump { width: 66px; height: 66px; font-size: 24px; }
+  #touchControls { padding: 0 10px; bottom: 10px; }
+  .tc-left { gap: 8px; }
+}
+
+@media (max-height: 450px) {
+  #touchControls { bottom: 6px; }
+  .touch-btn { width: 56px; height: 56px; font-size: 20px; }
+  .touch-jump { width: 64px; height: 64px; font-size: 22px; }
+}
+
+/* =====================================================
+   QUIZ — animação de entrada do modal
+   ===================================================== */
+#quizOverlay .card {
+  animation: cardPop 0.28s cubic-bezier(.34,1.56,.64,1) both;
+}
+
+/* Feedback melhorado */
+.feedback {
+  min-height: 22px; font-weight: 700; white-space: pre-line; font-size: 13px;
+  transition: color 0.2s; border-radius: 3px; padding: 4px 8px;
+}
+.feedback.correct { background: rgba(76,175,80,0.10); color: #1a6a1a !important; }
+.feedback.wrong   { background: rgba(139,0,0,0.08); color: #8b0000 !important; }
+
+/* =====================================================
+   STREAK / COMBO BADGE
+   ===================================================== */
+#streakBadge {
+  position: fixed; top: 58px; right: 14px; z-index: 1100;
+  background: linear-gradient(135deg, #cc2222, #8b0000);
+  color: #fdf6e3; border: 2px solid #3b0a0a;
+  border-radius: 20px; padding: 4px 12px;
+  font-family: 'Cinzel', serif; font-weight: 900; font-size: 12px;
+  box-shadow: 3px 3px 0 #3b0a0a, 0 0 12px rgba(204,34,34,0.4);
+  transform: scale(0); opacity: 0;
+  transition: transform 0.3s cubic-bezier(.34,1.56,.64,1), opacity 0.3s;
+  pointer-events: none;
+}
+#streakBadge.show {
+  transform: scale(1); opacity: 1;
+}
+
+/* =====================================================
+   BARRA DE PROGRESSO DO NÍVEL (HUD melhorado)
+   ===================================================== */
+.hud-level-badge {
+  display: inline-block; padding: 2px 8px; border-radius: 2px;
+  background: rgba(139,0,0,0.12); border: 1px solid rgba(139,0,0,0.25);
+  font-family: 'Cinzel', serif; font-weight: 700; font-size: 11px;
+  color: #8b0000; margin-left: 4px; vertical-align: middle;
+}
+
+/* =====================================================
+   ECRÃ INICIAL — decoração extra
+   ===================================================== */
+#startOverlay .card h1 {
+  position: relative;
+}
+#startOverlay .card h1::before {
+  content: '🌹';
+  position: absolute; left: -4px; top: 50%; transform: translateY(-50%);
+  font-size: 14px; opacity: 0.5;
+}
+
+/* Linha decorativa entre secções do ecrã inicial */
+.start-divider {
+  border: none;
+  border-top: 1px solid rgba(139,0,0,0.22);
+  margin: 10px 0;
+  position: relative;
+}
+.start-divider::after {
+  content: '✦';
+  position: absolute; left: 50%; top: -8px;
+  transform: translateX(-50%);
+  background: #fdf6e3; padding: 0 6px;
+  font-size: 10px; color: rgba(139,0,0,0.45);
+}
+
+/* =====================================================
+   QUIZ — indicador de tentativas
+   ===================================================== */
+.quiz-attempts {
+  display: flex; gap: 4px; justify-content: flex-end;
+  margin-bottom: 6px;
+}
+.quiz-attempt-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: rgba(139,0,0,0.15); border: 1.5px solid rgba(139,0,0,0.3);
+  transition: background 0.2s;
+}
+.quiz-attempt-dot.used { background: #8b0000; border-color: #5a0000; }
+
+/* =====================================================
+   WIN CARD — estatísticas melhoradas
+   ===================================================== */
+.win-stats-grid {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; margin: 8px 0 14px;
+}
+.win-stat-box {
+  background: rgba(204,34,34,0.07);
+  border: 1.5px solid rgba(204,34,34,0.18);
+  border-radius: 4px; padding: 8px 10px;
+  text-align: center;
+}
+.win-stat-box .stat-label {
+  display: block; font-size: 10px; font-family: 'Cinzel', serif;
+  font-weight: 700; color: rgba(139,0,0,0.6); letter-spacing: 0.5px;
+  text-transform: uppercase; margin-bottom: 3px;
+}
+.win-stat-box .stat-value {
+  display: block; font-size: 20px; font-weight: 900;
+  color: #8b0000; font-family: 'Cinzel', serif;
+}
+.win-stat-box.medal-box {
+  grid-column: 1 / -1;
+  background: linear-gradient(135deg, rgba(204,34,34,0.10), rgba(139,0,0,0.05));
+  border-color: rgba(139,0,0,0.3);
+}
+.win-stat-box.medal-box .stat-value { font-size: 17px; }
+
+/* =====================================================
+   MODO NOTURNO / HIGH CONTRAST ajustes de quiz
+   ===================================================== */
+body.high-contrast .feedback.correct { background: rgba(0,128,0,0.18); }
+body.high-contrast .feedback.wrong   { background: rgba(139,0,0,0.18); }
+body.high-contrast .chapter-dot.current { box-shadow: 0 0 14px rgba(255,50,50,0.7); }
+
+/* =====================================================
+   ANIMAÇÃO DO ÍCONE DO GAME OVER
+   ===================================================== */
+.gameover-icon {
+  font-size: 52px; margin-bottom: 8px;
+  animation: gameoverShake 0.6s ease-in-out both, pulse 1.2s ease-in-out 0.7s infinite;
+}
+@keyframes gameoverShake {
+  0%,100% { transform: rotate(0deg) scale(1); }
+  15%  { transform: rotate(-8deg) scale(1.1); }
+  30%  { transform: rotate(7deg) scale(1.08); }
+  45%  { transform: rotate(-5deg) scale(1.06); }
+  60%  { transform: rotate(4deg) scale(1.03); }
+  75%  { transform: rotate(-2deg) scale(1.01); }
+}
+
+/* =====================================================
+   TOQUE — feedback haptico visual
+   ===================================================== */
+.touch-btn:active {
+  filter: brightness(1.2);
+}
