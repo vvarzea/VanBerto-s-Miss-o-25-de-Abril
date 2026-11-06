@@ -1,0 +1,31 @@
+{
+  "name": "VanBerto's — A Revolução dos Cravos",
+  "short_name": "VanBerto's",
+  "description": "Um jogo de plataformas sobre o 25 de Abril de 1974 e a conquista da liberdade, com o VanBerto's!",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "landscape",
+  "background_color": "#0a1a0a",
+  "theme_color": "#c8231f",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-maskable-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
