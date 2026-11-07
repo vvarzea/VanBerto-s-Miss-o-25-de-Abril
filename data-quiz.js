@@ -32,7 +32,7 @@ export const HISTORY = [
   { title: "📻 As Senhas na Rádio",
     text: "Na noite de 24 de abril de 1974, a rádio passou duas senhas. Às 22h55, a canção «E Depois do Adeus» avisou que a operação estava em marcha. Pouco depois da meia-noite, «Grândola, Vila Morena», de Zeca Afonso, foi o sinal para avançar." },
   { title: "🐎 Salgueiro Maia",
-    text: "O capitão Salgueiro Maia saiu de Santarém com os seus homens e chegou ao Terreiro do Paço, em Lisboa, ao amanhecer. Quando mandaram disparar contra ele, vários soldados recusaram-se e juntaram-se aos revoltosos. Foi assim que os ministérios ficaram nas mãos do MFA." },
+    text: "O capitão Salgueiro Maia saiu de Santarém com os seus homens e chegou ao Terreiro do Paço, em Lisboa, ao amanhecer. Mais tarde, quando um comandante do regime mandou disparar contra ele, os soldados recusaram-se e juntaram-se aos revoltosos. Foi o momento mais tenso do dia e acabou sem um único tiro." },
   { title: "🏰 O Largo do Carmo",
     text: "Marcelo Caetano, o chefe do governo, refugiou-se no quartel do Carmo, em Lisboa. Salgueiro Maia cercou o quartel e, ao fim do dia, Caetano rendeu-se ao general Spínola. A ditadura tinha acabado, quase sem tiros." },
   { title: "🌹 O Povo e os Cravos",
