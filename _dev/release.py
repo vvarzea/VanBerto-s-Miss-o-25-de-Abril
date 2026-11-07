@@ -41,7 +41,7 @@ if not a.no_smoke:
 if a.check_only: sys.exit(0)
 
 out = pathlib.Path(a.out); out.mkdir(parents=True, exist_ok=True)
-name = f"Missao_Ciberseguranca_{a.tag}" + (f"_{a.name}" if a.name else "") + ".zip"
+name = f"Revolucao_dos_Cravos_{a.tag}" + (f"_{a.name}" if a.name else "") + ".zip"
 zpath = out / name
 if zpath.exists(): zpath.unlink()
 with zipfile.ZipFile(zpath, "w", zipfile.ZIP_DEFLATED) as z:

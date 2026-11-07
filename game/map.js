@@ -7,23 +7,23 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { vbSay } from "./dialogue.js?v=20261106v1";
-import { startOverlay } from "./dom.js?v=20261106v1";
-import { playLevelTransition } from "./door.js?v=20261106v1";
-import { loadLevel } from "./level.js?v=20261106v1";
-import { openOverlay, saveGame } from "./overlays.js?v=20261106v1";
-import { showHistory } from "./quiz.js?v=20261106v1";
-import { initPhaser } from "./scene.js?v=20261106v1";
-import { currentLevel, getStartLives, mapProgress, pausedByTeacher, playerName, playerNameHUD, powerHaloGfx, sceneRef, score, set__historySubOpen, set__overlayPaused, set__winOverlaySubOpen, set_currentLevel, set_lives, shadowGfx } from "./state.js?v=20261106v1";
-import { loadNamespace, saveNamespace } from "../storage.js?v=20261106v1";
-import { MAP_REGIONS } from "../data-progression.js?v=20261106v1";
-import { applyBackground as applyBackgroundRaw } from "../background.js?v=20261106v1";
-import { LEVELS, THEMES } from "../data-levels.js?v=20261106v1";
-import { ensureAudio, SFX } from "../audio.js?v=20261106v1";
-import { playTitleCard } from "../cinematics.js?v=20261106v1";
-import { starsForLevel } from "../stars.js?v=20261106v1";
-import { REGION_INTRO } from "../data-story.js?v=20261106v1";
-import { VB_LEVEL_INTRO } from "../data-flavor.js?v=20261106v1";
+import { vbSay } from "./dialogue.js?v=20261107v2";
+import { startOverlay } from "./dom.js?v=20261107v2";
+import { playLevelTransition } from "./door.js?v=20261107v2";
+import { loadLevel } from "./level.js?v=20261107v2";
+import { openOverlay, saveGame } from "./overlays.js?v=20261107v2";
+import { showHistory } from "./quiz.js?v=20261107v2";
+import { initPhaser } from "./scene.js?v=20261107v2";
+import { currentLevel, getStartLives, mapProgress, pausedByTeacher, playerName, playerNameHUD, powerHaloGfx, sceneRef, score, set__historySubOpen, set__overlayPaused, set__winOverlaySubOpen, set_currentLevel, set_lives, shadowGfx } from "./state.js?v=20261107v2";
+import { loadNamespace, saveNamespace } from "../storage.js?v=20261107v2";
+import { MAP_REGIONS } from "../data-progression.js?v=20261107v2";
+import { applyBackground as applyBackgroundRaw } from "../background.js?v=20261107v2";
+import { LEVELS, THEMES } from "../data-levels.js?v=20261107v2";
+import { ensureAudio, SFX } from "../audio.js?v=20261107v2";
+import { playTitleCard } from "../cinematics.js?v=20261107v2";
+import { starsForLevel } from "../stars.js?v=20261107v2";
+import { REGION_INTRO } from "../data-story.js?v=20261107v2";
+import { VB_LEVEL_INTRO } from "../data-flavor.js?v=20261107v2";
 
 
 // ===== Dicas =====

@@ -7,22 +7,22 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { clearMiniViruses, clearPopupHazard, clearToxicZones, doBossBlink, doBossHop, doBossIdleArms, doBossIdleBlink, doBossRollQmark, doBossSmokePuff, doBossTeleport, doBossThrowBook, maintainMiniViruses, spawnMiniViruses, spawnPopupHazard, spawnToxicZones, stopPhishingDecoy } from "./boss-attacks.js?v=20261106v1";
-import { bossDialogueAnchor, playBossDialogue, vbDialogueAnchor } from "./dialogue.js?v=20261106v1";
-import { quizOverlay } from "./dom.js?v=20261106v1";
-import { showFloat } from "./feedback.js?v=20261106v1";
-import { clearDoubleJump, clearPower, clearStarPower, setInvuln } from "./items.js?v=20261106v1";
-import { clearExtremoAllies } from "./level.js?v=20261106v1";
-import { applyBackground, bgKeyForLevel } from "./map.js?v=20261106v1";
-import { snapPlayerToGround } from "./rooms.js?v=20261106v1";
-import { _critterSession, balloons, bossLockIcon, bossOverlay, bossRageIcon, bossState, bossTimers, bossVignette, critters, currentLevel, door, enemyTimers, getBossExtraHp, getBossSpeedMult, hudText, inBossFight, itemCountText, itemsGroup, malwareGroup, pipeExitDecor, platforms, player, set__critterSession, set__doorAnimRunning, set_awaitingQuiz, set_awaitingStory, set_balloons, set_bossLockIcon, set_bossOverlay, set_bossRageIcon, set_bossState, set_bossTimers, set_bossVignette, set_controlsInvertedUntil, set_critters, set_door, set_enemyTimers, set_inBossFight, set_invuln, set_pipeExitDecor, tipText } from "./state.js?v=20261106v1";
-import { clearMovingPlatforms, clearSign, clearTrampolines, spawnBossSign, spawnMovingPlatforms } from "./world.js?v=20261106v1";
-import { BOSS_BY_LEVEL } from "../data-bosses.js?v=20261106v1";
-import { clearPlatformDecor } from "../background.js?v=20261106v1";
-import { LEVELS, THEMES } from "../data-levels.js?v=20261106v1";
-import { makePlatformTextureThemed } from "../textures.js?v=20261106v1";
-import { ensureAudio, SFX, beep } from "../audio.js?v=20261106v1";
-import { BOSS_OBJECTIVE, BOSS_INTRO_VB, BOSS_HP_TAUNTS } from "../data-story.js?v=20261106v1";
+import { clearMiniViruses, clearPopupHazard, clearToxicZones, doBossBlink, doBossHop, doBossIdleArms, doBossIdleBlink, doBossRollQmark, doBossSmokePuff, doBossTeleport, doBossThrowBook, maintainMiniViruses, spawnMiniViruses, spawnPopupHazard, spawnToxicZones, stopPhishingDecoy } from "./boss-attacks.js?v=20261107v2";
+import { bossDialogueAnchor, playBossDialogue, vbDialogueAnchor } from "./dialogue.js?v=20261107v2";
+import { quizOverlay } from "./dom.js?v=20261107v2";
+import { showFloat } from "./feedback.js?v=20261107v2";
+import { clearDoubleJump, clearPower, clearStarPower, setInvuln } from "./items.js?v=20261107v2";
+import { clearExtremoAllies } from "./level.js?v=20261107v2";
+import { applyBackground, bgKeyForLevel } from "./map.js?v=20261107v2";
+import { snapPlayerToGround } from "./rooms.js?v=20261107v2";
+import { _critterSession, balloons, bossLockIcon, bossOverlay, bossRageIcon, bossState, bossTimers, bossVignette, critters, currentLevel, door, enemyTimers, getBossExtraHp, getBossSpeedMult, hudText, inBossFight, itemCountText, itemsGroup, malwareGroup, pipeExitDecor, platforms, player, set__critterSession, set__doorAnimRunning, set_awaitingQuiz, set_awaitingStory, set_balloons, set_bossLockIcon, set_bossOverlay, set_bossRageIcon, set_bossState, set_bossTimers, set_bossVignette, set_controlsInvertedUntil, set_critters, set_door, set_enemyTimers, set_inBossFight, set_invuln, set_pipeExitDecor, tipText } from "./state.js?v=20261107v2";
+import { clearMovingPlatforms, clearSign, clearTrampolines, spawnBossSign, spawnMovingPlatforms } from "./world.js?v=20261107v2";
+import { BOSS_BY_LEVEL } from "../data-bosses.js?v=20261107v2";
+import { clearPlatformDecor } from "../background.js?v=20261107v2";
+import { LEVELS, THEMES } from "../data-levels.js?v=20261107v2";
+import { makePlatformTextureThemed } from "../textures.js?v=20261107v2";
+import { ensureAudio, SFX, beep } from "../audio.js?v=20261107v2";
+import { BOSS_OBJECTIVE, BOSS_INTRO_VB, BOSS_HP_TAUNTS } from "../data-story.js?v=20261107v2";
 
 
 // =====================================================================
