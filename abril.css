@@ -3245,3 +3245,43 @@ body.hc-mode #cineDialog,body.hc-mode .cine-bar,body.hc-mode #cineTitleCard{ dis
   #mapOverlay .map-region { min-height: 0; padding: 6px 14px; }
   #mapOverlay .map-regions-grid { gap: 8px; }
 }
+
+/* =====================================================
+   TELEMÓVEL — cartões de história sem texto cortado
+   O cabeçalho e o botão ficam sempre visíveis; só o texto desliza (se for preciso).
+   Na horizontal (altura ≤ 520 px) o robô encolhe e as letras ajustam-se,
+   para o cartão caber inteiro sem ter de deslizar.
+   ===================================================== */
+.history-card { display: flex; flex-direction: column; overflow: hidden; }
+.history-card > .history-header,
+.history-card > .row,
+.history-card > .chapter-progress,
+.history-card > .main-story-robot { flex: 0 0 auto; }
+.history-card > .history-text {
+  flex: 1 1 auto; min-height: 0;
+  overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch;
+}
+@media (max-width: 520px) {
+  /* o selo redondo do canto não tapa o título do menu */
+  #startOverlay .card > h1 { padding-right: 46px; }
+}
+@media (max-width: 460px) and (orientation: portrait) {
+  .history-text { font-size: 14px; line-height: 1.6; }
+}
+@media (max-height: 520px) {
+  .history-card { padding: 8px 14px 8px; }
+  .history-header { margin-bottom: 6px; padding-bottom: 6px; gap: 10px; }
+  .history-icon { font-size: 28px; }
+  .history-card h2 { font-size: 16px; }
+  .history-subtitle { font-size: 10px; }
+  .history-text { font-size: 13px; line-height: 1.5; margin-bottom: 8px; padding: 8px 12px; }
+  .main-story-robot { height: 54px; margin: -2px 0 2px; }
+  .main-story-robot-img { height: 52px; }
+  .history-card .btn.primary { padding: 8px 18px; font-size: 14px; }
+}
+
+/* Dica «vira o telemóvel»: só aparece em telemóveis na vertical */
+.rotate-tip { display: none; color: #ffd700; font-style: normal; font-weight: 700; }
+@media (orientation: portrait) and (pointer: coarse) and (max-width: 700px) {
+  .rotate-tip { display: block; margin-bottom: 4px; }
+}
