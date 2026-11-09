@@ -7,21 +7,22 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { createArtOrbs } from "./artefacts.js?v=20261108v4";
-import { clearBossArenaDecor } from "./boss-core.js?v=20261108v4";
-import { tryOpenDoor } from "./door.js?v=20261108v4";
-import { showFloat } from "./feedback.js?v=20261108v4";
-import { clearDoubleJump, clearPower, clearStarPower } from "./items.js?v=20261108v4";
-import { applyBackground, bgKeyForLevel, prefetchBackgrounds } from "./map.js?v=20261108v4";
-import { saveGame } from "./overlays.js?v=20261108v4";
-import { setCrouchHitbox, snapPlayerToGround } from "./rooms.js?v=20261108v4";
-import { _doorWatchdogTimer, _landingCheckTimer, awaitingQuiz, bossExtremoAllies, bossState, bossTimers, currentLevel, currentLevelTip, decorativePipes, difficulty, door, doorOverlap, enemyTimers, getDifficulty, getMaxLives, getVillainJumpIntervalMult, getVillainSpeedMult, heartsGfx, hudText, invuln, isItemVisibleInDificil, isReducibleItemKind, isStarAllowedExtremo, itemCountText, itemsCollected, itemsGroup, itemsTotal, lives, malwareGroup, pipeExitDecor, pipes, platforms, player, playerName, playerNameHUD, powerHaloGfx, powerIndicator, powered, progressFill, resetPipeWarpState, score, scoreText, set__doorAnimRunning, set__doorWatchdogTimer, set__hudDirty, set__landingCheckTimer, set__pendingEntranceReveal, set_awaitingQuiz, set_bossExtremoAllies, set_bossTimers, set_collectedItemIndices, set_collectedRoomPipes, set_controlsInvertedUntil, set_currentLevel, set_currentLevelTip, set_decorativePipes, set_door, set_doorOverlap, set_enemyTimers, set_extraShieldCounted, set_inSecretRoom, set_invuln, set_isCrouching, set_itemsCollected, set_itemsTotal, set_livesLostThisLevel, set_pipeExitDecor, set_pipes, set_secretRoomHidden, set_secretRoomReturn, set_secretRoomTemp, shadowGfx, tipText, touch } from "./state.js?v=20261108v4";
-import { clearHazards, clearMovingPlatforms, clearPipeHintSign, clearSecretSigns, clearSecrets, clearTrampolines, difficultyFactor, spawnBalloons, spawnCritters, spawnHazards, spawnLevelSign, spawnMovingPlatforms, spawnPipeHintSign, spawnSecrets, spawnShields, spawnTrampolines } from "./world.js?v=20261108v4";
-import { LEVELS, THEMES } from "../data-levels.js?v=20261108v4";
-import { resetLevelStarTracking } from "../stars.js?v=20261108v4";
-import { makePlatformTextureThemed, makePipeTexture } from "../textures.js?v=20261108v4";
-import { spawnPlatformDecor, resetDoorGlow } from "../background.js?v=20261108v4";
-import { ensureAudio, SFX, beep } from "../audio.js?v=20261108v4";
+import { createArtOrbs } from "./artefacts.js?v=20261109v5";
+import { clearBossArenaDecor } from "./boss-core.js?v=20261109v5";
+import { tryOpenDoor } from "./door.js?v=20261109v5";
+import { showFloat } from "./feedback.js?v=20261109v5";
+import { clearDoubleJump, clearPower, clearStarPower } from "./items.js?v=20261109v5";
+import { applyBackground, bgKeyForLevel, prefetchBackgrounds } from "./map.js?v=20261109v5";
+import { saveGame } from "./overlays.js?v=20261109v5";
+import { setCrouchHitbox, snapPlayerToGround } from "./rooms.js?v=20261109v5";
+import { _doorWatchdogTimer, _landingCheckTimer, awaitingQuiz, bossExtremoAllies, bossState, bossTimers, currentLevel, currentLevelTip, decorativePipes, difficulty, door, doorOverlap, enemyTimers, getDifficulty, getMaxLives, getVillainJumpIntervalMult, getVillainSpeedMult, heartsGfx, hudText, invuln, isItemVisibleInDificil, isReducibleItemKind, isStarAllowedExtremo, itemCountText, itemsCollected, itemsGroup, itemsTotal, lives, malwareGroup, pipeExitDecor, pipes, platforms, player, playerName, playerNameHUD, powerHaloGfx, powerIndicator, powered, progressFill, resetPipeWarpState, score, scoreText, set__doorAnimRunning, set__doorWatchdogTimer, set__hudDirty, set__landingCheckTimer, set__pendingEntranceReveal, set_awaitingQuiz, set_bossExtremoAllies, set_bossTimers, set_collectedItemIndices, set_collectedRoomPipes, set_controlsInvertedUntil, set_currentLevel, set_currentLevelTip, set_decorativePipes, set_door, set_doorOverlap, set_enemyTimers, set_extraShieldCounted, set_inSecretRoom, set_invuln, set_isCrouching, set_itemsCollected, set_itemsTotal, set_livesLostThisLevel, set_pipeExitDecor, set_pipes, set_secretRoomHidden, set_secretRoomReturn, set_secretRoomTemp, shadowGfx, tipText, touch } from "./state.js?v=20261109v5";
+import { clearHazards, clearMovingPlatforms, clearPipeHintSign, clearSecretSigns, clearSecrets, clearTrampolines, difficultyFactor, spawnBalloons, spawnCritters, spawnHazards, spawnLevelSign, spawnMovingPlatforms, spawnPipeHintSign, spawnSecrets, spawnShields, spawnTrampolines } from "./world.js?v=20261109v5";
+import { LEVELS, THEMES } from "../data-levels.js?v=20261109v5";
+import { resetLevelStarTracking } from "../stars.js?v=20261109v5";
+import { makePlatformTextureThemed, makePipeTexture } from "../textures.js?v=20261109v5";
+import { spawnPlatformDecor, resetDoorGlow } from "../background.js?v=20261109v5";
+import { ensureAudio, SFX, beep } from "../audio.js?v=20261109v5";
+import { spawnBreakables, canOpenDoor } from "./breakables.js?v=20261109v5";
 
 // ===== Carregar nível =====
 
@@ -214,6 +215,7 @@ export function loadLevel(scene,idx){
     if(awaitingQuiz||_doorTriggered||invuln) return;
     // Segurança: ignorar overlap se o player ainda está perto do spawn (evita disparo falso no 1º frame após resume)
     if(Math.abs(player.x - _spawnX) < 200) return;
+    if(!canOpenDoor(scene)) return; // porta trancada: ainda há coisas por partir neste nível
     _doorTriggered=true;
     try{ scene.physics.world.removeCollider(doorOverlap); set_doorOverlap(null); }catch{}
     tryOpenDoor(scene);
@@ -397,6 +399,7 @@ export function loadLevel(scene,idx){
   clearTrampolines();     spawnTrampolines(scene,L);
   clearSecrets();         spawnSecrets(scene,L);
   clearHazards();         spawnHazards(scene,L);
+  spawnBreakables(scene,L); // blocos para partir (e, nalguns níveis, objetivo que tranca a porta)
 
   player.setAlpha(0); player.setAngle(0); player.setFlipX(false); player.setOrigin(0.5,0.5); player.setDepth(3);
   // Importante: manter o tamanho NORMAL aqui (não o "achatado" do pop de
@@ -433,25 +436,25 @@ export function loadLevel(scene,idx){
 
   const TIPS = [
     "🏛️ O Estado Novo durou de 1933 a 1974 — apanha os cravos e chega à porta ✨!",
-    "⛪ «Deus, Pátria e Família» era o lema do regime. E a liberdade?",
-    "✏️ Os censores riscavam os jornais com um lápis azul antes de saírem!",
+    "📦 NOVO: parte as caixas! Salta por baixo ou carrega ↓ em cima.",
+    "✏️ Parte os 4 carimbos 🟥 para abrir a porta! (cabeçada ou ↓)",
     "🦘 USA OS TRAMPOLINS! Os vãos são intransponíveis sem eles!",
     "🗳️ Sem eleições livres, o povo não escolhia quem o governava!",
-    "🕵️ A PIDE vigiava, prendia e interrogava quem criticava o regime!",
+    "🕵️ Destrói as 3 escutas 🎙️ para abrir a porta!",
     "🪖 A Guerra Colonial durou 13 anos, de 1961 a 1974!",
     "🚂 Muitos portugueses emigraram «a salto», à procura de uma vida melhor!",
     "🎖️ Os capitães juntaram-se em segredo e formaram o MFA!",
     "🗺️ O posto de comando da revolução ficava na Pontinha, em Lisboa!",
-    "📻 «Grândola, Vila Morena» foi a senha que deu o sinal para avançar!",
-    "🐎 Salgueiro Maia chegou ao Terreiro do Paço e ninguém disparou contra ele!",
+    "📻 Parte as 3 interferências 📡 para abrir a porta!",
+    "🐎 Derruba as 3 barricadas 🚧 (2 pancadas cada)!",
     "🏰 Marcelo Caetano rendeu-se no Largo do Carmo!",
     "🔥 CUIDADO COM A LAVA! Mantém-te nas plataformas — não caias!",
-    "🔓 Depois do 25 de Abril, os presos políticos foram libertados!",
+    "🔓 Parte as 4 grades ⛓️ e liberta os presos!",
     "📜 Democratizar, Descolonizar e Desenvolver: os três D do MFA!",
     "🎉 Em 1974, o 1.º de Maio foi festa em liberdade!",
     "🏃 As plataformas MOVEM-SE! Observa o ritmo antes de saltar!",
     "🗳️ Em 1975, os portugueses votaram nas primeiras eleições livres!",
-    "🕊️ 25 de Abril sempre! A liberdade defende-se todos os dias!"
+    "🧱 Derruba os 4 muros (2 pancadas cada) para abrir a porta!"
   ];
   set_currentLevelTip( (TIPS[currentLevel] || TIPS[0]) + (currentLevel >= 6 ? " ⚠️ Cuidado!" : ""));
   tipText.setText(currentLevelTip);

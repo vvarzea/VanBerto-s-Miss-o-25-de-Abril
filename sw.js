@@ -4,14 +4,14 @@
 //    jogados têm fundo; os outros mostram o céu desenhado (o jogo já lida com isso em applyBackground).
 //  • Cada versão tem a sua própria cache, por isso nunca se misturam ficheiros de versões diferentes.
 // VERSION é carimbada pelo _dev/release.py e tem de ser igual à string ?v= do index.html (o check.mjs verifica).
-const VERSION = "20261108v4";
+const VERSION = "20261109v5";
 const CACHE = "vanbertos-abril-" + VERSION;
 
 // Ficheiros do núcleo. Os .js e .css pedem-se com ?v=VERSION, como no index.html e nos imports.
 const CORE = [
   "./", "index.html", "manifest.json",
   "abril.css", "abril.js", "phaser.min.js",
-  "game/artefacts.js", "game/boss-attacks.js", "game/boss-combat.js", "game/boss-core.js", "game/boss-end.js",
+  "game/artefacts.js", "game/boss-attacks.js", "game/boss-combat.js", "game/boss-core.js", "game/boss-end.js", "game/breakables.js",
   "game/dialogue.js", "game/dom.js", "game/door.js", "game/feedback.js", "game/flow.js", "game/input.js",
   "game/items.js", "game/level.js", "game/map.js", "game/overlays.js", "game/quiz.js", "game/rooms.js",
   "game/scene.js", "game/screens.js", "game/state.js", "game/stats.js", "game/ui.js", "game/vanberto.js",

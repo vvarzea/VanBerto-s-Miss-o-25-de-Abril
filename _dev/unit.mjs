@@ -149,6 +149,40 @@ await test("estrelas: o progresso fica guardado e volta ao recarregar", async ()
   assert.equal(raw.stars[7].firstTry, true);
 });
 
+// ===================== objetos para partir (game/breakables.js) =====================
+test("breakables: tipos válidos, posições sobre uma plataforma, sem tapar plataformas, objetivos com ≥ 3 blocos", () => {
+  const KINDS = ["caixa", "carimbo", "escuta", "interf", "barricada", "grade", "muro"];
+  const erros = [];
+  let comBlocos = 0, comObjetivo = 0;
+  LEVELS.forEach((l, i) => {
+    const bl = l.breakables || [];
+    if (!bl.length) return;
+    comBlocos++;
+    const plats = l.platforms.map(p => ({ l: p.x - p.w / 2, r: p.x + p.w / 2, t: p.y - p.h / 2, b: p.y + p.h / 2 }));
+    bl.forEach((b, k) => {
+      const id = `nível ${i + 1}, bloco ${k + 1} (${b.kind}@${b.x},${b.y})`;
+      if (!KINDS.includes(b.kind)) erros.push(`${id}: tipo inválido`);
+      const box = { l: b.x - 22, r: b.x + 22, t: b.y - 22, b: b.y + 22 };
+      if (plats.some(p => p.r > box.l && p.l < box.r && p.b > box.t && p.t < box.b)) erros.push(`${id}: sobrepõe uma plataforma`);
+      // plataforma por baixo: o fundo do bloco fica 60–95 px acima do topo (cabeçada possível: salto máx. ≈ 192 px)
+      const sob = plats.filter(p => p.l <= b.x && p.r >= b.x && p.t >= box.b);
+      const perto = sob.length ? Math.min(...sob.map(p => p.t - box.b)) : Infinity;
+      if (!(perto >= 60 && perto <= 95)) erros.push(`${id}: o fundo fica a ${Math.round(perto)} px da plataforma de baixo (esperado 60–95)`);
+      // a coluna entre a plataforma e o bloco tem de estar livre (senão não dá para estar por baixo)
+      if (sob.length) {
+        const top = Math.min(...sob.map(p => p.t));
+        const col = { l: b.x - 30, r: b.x + 30, t: box.b, b: top - 1 };
+        if (plats.some(p => p.r > col.l && p.l < col.r && p.b > col.t && p.t < col.b)) erros.push(`${id}: coluna por baixo do bloco está obstruída`);
+      }
+    });
+    const goals = bl.filter(b => b.goal).length;
+    if (goals) { comObjetivo++; if (goals < 3) erros.push(`nível ${i + 1}: o objetivo tem só ${goals} blocos (mínimo 3)`); }
+  });
+  if (comBlocos < 12) erros.push(`só ${comBlocos} níveis têm blocos para partir`);
+  if (comObjetivo < 5) erros.push(`só ${comObjetivo} níveis têm objetivo que tranca a porta`);
+  assert.equal(erros.length, 0, erros.slice(0, 6).join("\n"));
+});
+
 // ===================== níveis: física e alcançabilidade =====================
 // As constantes têm de coincidir com o código; se alguém mudar a física, este teste avisa em vez de dar falsos «ok».
 const src = f => fs.readFileSync(path.join(root, f), "utf8");

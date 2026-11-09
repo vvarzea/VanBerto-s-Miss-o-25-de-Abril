@@ -7,30 +7,31 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { createArtOrbs } from "./artefacts.js?v=20261108v4";
-import { updateBossFight } from "./boss-combat.js?v=20261108v4";
-import { btnCloseQuiz, btnMute, btnPause, btnRestart, btnRestartGame, gameOverOverlay, historyOverlay, quizOverlay, startOverlay, winOverlay } from "./dom.js?v=20261108v4";
-import { playLevelTransition } from "./door.js?v=20261108v4";
-import { pickPraise, showFloat } from "./feedback.js?v=20261108v4";
-import { createTouchInput } from "./input.js?v=20261108v4";
-import { onCollectItem, onHitMalware, poweredCountdownVal } from "./items.js?v=20261108v4";
-import { loadLevel, updateHUD, updateHearts, updateProgressBar } from "./level.js?v=20261108v4";
-import { BG_FILES, _bootLevelIdx, bgKeyForLevel, prefersReducedMotion, renderMap, setupBackgroundLoading } from "./map.js?v=20261108v4";
-import { SECONDARY_OVERLAYS, closeAllSecondaryOverlays, loadGame, openOverlay, saveGame } from "./overlays.js?v=20261108v4";
-import { quizStats, resetQuizStats, showHistory, usedQuizByLevel, usedQuizByTheme } from "./quiz.js?v=20261108v4";
-import { exitCrouch, setCrouchHitbox, tryEnterPipe } from "./rooms.js?v=20261108v4";
-import { COYOTE_MS, GRAVITY, JUMP_BUFFER_MS, _critterSession, _doorAnimRunning, _doorWatchdogTimer, _hudDirty, _landingCheckTimer, _overlayPaused, _pipeDownWasHeld, _pipeWarping, _suppressCrouchUntilRelease, awaitingQuiz, awaitingStory, balloons, bossState, controlsInvertedUntil, coyoteUntil, critters, currentLevel, cursors, door, doorOverlap, doubleJumpActive, doubleJumpUsed, getStartLives, hazards, inBossFight, inSecretRoom, invuln, isCrouching, itemsGroup, jumpBufferedUntil, keyS, keySpace, lives, malwareGroup, mapProgress, pauseOverlayGfx, pausedByTeacher, pipes, platforms, player, powerHaloGfx, powered, progressBg, progressFill, resetPipeWarpState, sceneRef, score, scoreText, set__doorAnimRunning, set__doorWatchdogTimer, set__historySubOpen, set__hudDirty, set__landingCheckTimer, set__overlayPaused, set__pipeDownWasHeld, set__suppressCrouchUntilRelease, set_awaitingQuiz, set_awaitingStory, set_coyoteUntil, set_cursors, set_difficultyBadge, set_doorOverlap, set_doubleJumpUsed, set_heartsGfx, set_hudText, set_isCrouching, set_itemCountText, set_itemsGroup, set_jumpBufferedUntil, set_keyS, set_keySpace, set_lives, set_livesLostThisLevel, set_malwareGroup, set_pauseOverlayGfx, set_pausedByTeacher, set_platforms, set_player, set_playerNameHUD, set_powerHaloGfx, set_powerIndicator, set_progressBg, set_progressFill, set_sceneRef, set_score, set_scoreText, set_shadowGfx, set_sunAngle, set_tipText, set_transitionGfx, set_transitionLabel, shadowGfx, starPower, starPowerCountVal, sunAngle, touch, updateDifficultyBadge } from "./state.js?v=20261108v4";
-import { flushScoreToStats } from "./stats.js?v=20261108v4";
-import { applyVanBertoTexture, scheduleBlink, triggerVanBertoWink } from "./vanberto.js?v=20261108v4";
-import { updateDecorativePipeReactions, updateHazards, updateMovingPlatforms, updatePipeHintSign, updateSecretSigns, updateSecrets, updateSigns, updateTrampolines } from "./world.js?v=20261108v4";
-import { makeTextures } from "../textures.js?v=20261108v4";
-import { initBackground, drawSun, NIGHT_THEMES, drawStars, clouds, drawCloud, updateTrail, updateFootsteps, updateDoorGlow, updatePlatformDecor, bgConfetti } from "../background.js?v=20261108v4";
-import { isMuted, ensureAudio, SFX, beep } from "../audio.js?v=20261108v4";
-import { LEVELS, THEMES } from "../data-levels.js?v=20261108v4";
-import { ACHIEVEMENTS_DEFS } from "../data-progression.js?v=20261108v4";
-import { unlockedAchievements } from "../achievements.js?v=20261108v4";
-import { totalStarsEarned } from "../stars.js?v=20261108v4";
-import { PAUSE_TIPS } from "../data-flavor.js?v=20261108v4";
+import { createArtOrbs } from "./artefacts.js?v=20261109v5";
+import { updateBossFight } from "./boss-combat.js?v=20261109v5";
+import { btnCloseQuiz, btnMute, btnPause, btnRestart, btnRestartGame, gameOverOverlay, historyOverlay, quizOverlay, startOverlay, winOverlay } from "./dom.js?v=20261109v5";
+import { playLevelTransition } from "./door.js?v=20261109v5";
+import { pickPraise, showFloat } from "./feedback.js?v=20261109v5";
+import { createTouchInput } from "./input.js?v=20261109v5";
+import { onCollectItem, onHitMalware, poweredCountdownVal } from "./items.js?v=20261109v5";
+import { loadLevel, updateHUD, updateHearts, updateProgressBar } from "./level.js?v=20261109v5";
+import { BG_FILES, _bootLevelIdx, bgKeyForLevel, prefersReducedMotion, renderMap, setupBackgroundLoading } from "./map.js?v=20261109v5";
+import { SECONDARY_OVERLAYS, closeAllSecondaryOverlays, loadGame, openOverlay, saveGame } from "./overlays.js?v=20261109v5";
+import { quizStats, resetQuizStats, showHistory, usedQuizByLevel, usedQuizByTheme } from "./quiz.js?v=20261109v5";
+import { exitCrouch, setCrouchHitbox, tryEnterPipe } from "./rooms.js?v=20261109v5";
+import { COYOTE_MS, GRAVITY, JUMP_BUFFER_MS, _critterSession, _doorAnimRunning, _doorWatchdogTimer, _hudDirty, _landingCheckTimer, _overlayPaused, _pipeDownWasHeld, _pipeWarping, _suppressCrouchUntilRelease, awaitingQuiz, awaitingStory, balloons, bossState, controlsInvertedUntil, coyoteUntil, critters, currentLevel, cursors, door, doorOverlap, doubleJumpActive, doubleJumpUsed, getStartLives, hazards, inBossFight, inSecretRoom, invuln, isCrouching, itemsGroup, jumpBufferedUntil, keyS, keySpace, lives, malwareGroup, mapProgress, pauseOverlayGfx, pausedByTeacher, pipes, platforms, player, powerHaloGfx, powered, progressBg, progressFill, resetPipeWarpState, sceneRef, score, scoreText, set__doorAnimRunning, set__doorWatchdogTimer, set__historySubOpen, set__hudDirty, set__landingCheckTimer, set__overlayPaused, set__pipeDownWasHeld, set__suppressCrouchUntilRelease, set_awaitingQuiz, set_awaitingStory, set_coyoteUntil, set_cursors, set_difficultyBadge, set_doorOverlap, set_doubleJumpUsed, set_heartsGfx, set_hudText, set_isCrouching, set_itemCountText, set_itemsGroup, set_jumpBufferedUntil, set_keyS, set_keySpace, set_lives, set_livesLostThisLevel, set_malwareGroup, set_pauseOverlayGfx, set_pausedByTeacher, set_platforms, set_player, set_playerNameHUD, set_powerHaloGfx, set_powerIndicator, set_progressBg, set_progressFill, set_sceneRef, set_score, set_scoreText, set_shadowGfx, set_sunAngle, set_tipText, set_transitionGfx, set_transitionLabel, shadowGfx, starPower, starPowerCountVal, sunAngle, touch, updateDifficultyBadge } from "./state.js?v=20261109v5";
+import { flushScoreToStats } from "./stats.js?v=20261109v5";
+import { applyVanBertoTexture, scheduleBlink, triggerVanBertoWink } from "./vanberto.js?v=20261109v5";
+import { updateBreakables } from "./breakables.js?v=20261109v5";
+import { updateDecorativePipeReactions, updateHazards, updateMovingPlatforms, updatePipeHintSign, updateSecretSigns, updateSecrets, updateSigns, updateTrampolines } from "./world.js?v=20261109v5";
+import { makeTextures } from "../textures.js?v=20261109v5";
+import { initBackground, drawSun, NIGHT_THEMES, drawStars, clouds, drawCloud, updateTrail, updateFootsteps, updateDoorGlow, updatePlatformDecor, bgConfetti } from "../background.js?v=20261109v5";
+import { isMuted, ensureAudio, SFX, beep } from "../audio.js?v=20261109v5";
+import { LEVELS, THEMES } from "../data-levels.js?v=20261109v5";
+import { ACHIEVEMENTS_DEFS } from "../data-progression.js?v=20261109v5";
+import { unlockedAchievements } from "../achievements.js?v=20261109v5";
+import { totalStarsEarned } from "../stars.js?v=20261109v5";
+import { PAUSE_TIPS } from "../data-flavor.js?v=20261109v5";
 
 // ===== Salas secretas isoladas ("tipo os bosses") =====
 // Em vez de uma plataforma algures no mesmo mundo do nível, entrar num
@@ -111,27 +112,27 @@ function create() {
   set_powerHaloGfx( this.add.graphics().setDepth(2));
 
   // HUD
-  set_hudText( this.add.text(14, 10, "", { fontSize:"16px", fontStyle:"900", color:"#fff5e0", stroke:"#200040", strokeThickness:4 }).setScrollFactor(0).setDepth(100));
-  set_scoreText( this.add.text(14, 32, "", { fontSize:"14px", fontStyle:"900", color:"#ffd700", stroke:"#200040", strokeThickness:3 }).setScrollFactor(0).setDepth(100));
+  set_hudText( this.add.text(14, 10, "", { fontSize:"16px", fontStyle:"900", color:"#fff5e0", stroke:"#07210f", strokeThickness:4 }).setScrollFactor(0).setDepth(100));
+  set_scoreText( this.add.text(14, 32, "", { fontSize:"14px", fontStyle:"900", color:"#ffd700", stroke:"#07210f", strokeThickness:3 }).setScrollFactor(0).setDepth(100));
   // Nome do jogador — elemento HTML fixo (não Phaser), acima de tudo
   set_playerNameHUD( document.getElementById("playerNameHtml"));
   set_heartsGfx( this.add.graphics().setScrollFactor(0).setDepth(100));
   set_tipText( this.add.text(14, 74, "", { fontSize:"13px", fontStyle:"800", color:"#ff6b35", stroke:"#fff5e0", strokeThickness:3 }).setScrollFactor(0).setDepth(100));
-  set_itemCountText( this.add.text(14, 92, "", { fontSize:"12px", fontStyle:"800", color:"#fff5e0", stroke:"#200040", strokeThickness:2 }).setScrollFactor(0).setDepth(100));
+  set_itemCountText( this.add.text(14, 92, "", { fontSize:"12px", fontStyle:"800", color:"#fff5e0", stroke:"#07210f", strokeThickness:2 }).setScrollFactor(0).setDepth(100));
 
   set_progressBg( this.add.graphics().setScrollFactor(0).setDepth(100));
   set_progressFill( this.add.graphics().setScrollFactor(0).setDepth(100));
   progressBg.fillStyle(0x000000, 0.20);
   progressBg.fillRoundedRect(8, 110, 230, 10, 5);
 
-  set_powerIndicator( this.add.text(960-14, 52, "", { fontSize:"14px", fontStyle:"900", color:"#ffd700", stroke:"#200040", strokeThickness:4 }).setScrollFactor(0).setDepth(102).setOrigin(1,0));
+  set_powerIndicator( this.add.text(960-14, 52, "", { fontSize:"14px", fontStyle:"900", color:"#ffd700", stroke:"#07210f", strokeThickness:4 }).setScrollFactor(0).setDepth(102).setOrigin(1,0));
 
   // Crachá fixo da dificuldade atual (Fácil/Difícil/Extremo) — sempre
   // visível, canto superior direito, por baixo do powerIndicator (y=52),
   // que é a mesma zona onde o "⭐ STAR POWER" já fica sempre bem visível,
   // sem ser tapado pelo botão HTML "☰ Menu" (fixo no verdadeiro canto do
   // ecrã, fora do canvas — y=10 ficava por baixo dele, reportado com print).
-  set_difficultyBadge( this.add.text(960-14, 76, "", { fontSize:"13px", fontStyle:"900", color:"#8affc1", stroke:"#200040", strokeThickness:3 }).setScrollFactor(0).setDepth(102).setOrigin(1,0));
+  set_difficultyBadge( this.add.text(960-14, 76, "", { fontSize:"13px", fontStyle:"900", color:"#8affc1", stroke:"#07210f", strokeThickness:3 }).setScrollFactor(0).setDepth(102).setOrigin(1,0));
   updateDifficultyBadge();
 
   // ── HUD de orbes dos artefactos ────────────────────────────────
@@ -147,7 +148,7 @@ function create() {
   // pauseVanImg e pauseLabel removidos — substituídos pelo overlay HTML #pauseInfoOverlay
 
   set_transitionGfx( this.add.graphics().setScrollFactor(0).setDepth(800).setAlpha(0));
-  set_transitionLabel( this.add.text(480, 270, "", { fontSize:"32px", fontStyle:"900", color:"#ffd700", stroke:"#200040", strokeThickness:8, align:"center" }).setOrigin(0.5).setScrollFactor(0).setDepth(801).setAlpha(0));
+  set_transitionLabel( this.add.text(480, 270, "", { fontSize:"32px", fontStyle:"900", color:"#ffd700", stroke:"#07210f", strokeThickness:8, align:"center" }).setOrigin(0.5).setScrollFactor(0).setDepth(801).setAlpha(0));
 
   set_platforms( this.physics.add.staticGroup());
   set_itemsGroup( this.physics.add.group({ allowGravity:false }));
@@ -607,6 +608,7 @@ function update() {
 }
 
 function updateGameFrame() {
+  updateBreakables(); // esconde os blocos nas salas secretas (corre mesmo dentro delas)
   const _updOverlay = awaitingQuiz || awaitingStory
     || !startOverlay.classList.contains('hidden')
     || !historyOverlay.classList.contains('hidden')

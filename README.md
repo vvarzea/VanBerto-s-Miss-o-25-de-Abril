@@ -4,6 +4,26 @@ Jogo de plataformas educativo sobre o **25 de Abril de 1974** (a Revolução dos
 O VanBerto's viaja no tempo, da ditadura do Estado Novo até à construção da democracia. Português de Portugal.
 Sem *build step*: os ficheiros publicam-se tal como estão (GitHub Pages).
 
+## Partir coisas (mecânica própria de «A Revolução dos Cravos»)
+
+Em 17 dos 20 níveis há **blocos suspensos acima das plataformas** que se partem:
+
+- **Cabeçada:** saltar por baixo do bloco.
+- **Pisão:** estar em cima do bloco e carregar em ↓ (agachar).
+- **Força:** com o cravo dourado 🌟 ou o punho ✊ ativos, basta tocar-lhe.
+
+Há 7 tipos: caixa 📦, carimbo «CENSURADO» 🟥, escuta 🎙️, interferência 📡 (levam 1 pancada) e
+barricada 🚧, grade ⛓️ e muro 🧱 (levam **2 pancadas**: racham à primeira). Partir dá pontos e estilhaços;
+as grades libertam um preso («Liberdade!»).
+
+Em 6 níveis (3, 6, 11, 12, 15 e 20) partir é o **objetivo**: a porta fica trancada (🔒) e aparece um contador
+no ecrã («🔒 🟥 carimbos: 1/4») até todos os blocos do objetivo serem partidos.
+
+Onde mexer: `game/breakables.js` (lógica), `textures.js` (desenhos, função `makeBreakableTextures`) e
+`data-levels.js` (no fim do ficheiro, o objeto `BREAKABLES` com `kind`, `x`, `y` e `goal`).
+As posições foram calculadas para ficarem 76 px acima do topo de uma plataforma (o salto sobe ≈ 192 px);
+o teste `breakables` em `_dev/unit.mjs` valida isso para todos os níveis.
+
 ## O jogo
 
 - **20 níveis em 4 mundos**, cada um terminado por um boss temático:
@@ -119,7 +139,7 @@ e abrir <http://localhost:8000>.
 ## Versões e cache
 
 Todos os ficheiros carregados pelo `index.html` e todos os `import` internos levam **a mesma**
-string `?v=…` (atualmente `20261108v4`). Tem de ser sempre igual em todo o lado: o mesmo módulo
+string `?v=…` (atualmente `20261109v5`). Tem de ser sempre igual em todo o lado: o mesmo módulo
 importado com strings diferentes é carregado duas vezes, como duas instâncias separadas, e os
 browsers que já têm o jogo podem ficar com uma mistura de ficheiros velhos e novos.
 

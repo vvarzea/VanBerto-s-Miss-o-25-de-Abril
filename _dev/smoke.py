@@ -39,7 +39,7 @@ def new_page(browser, w=960, h=600, touch=False, reduced=False, route=None, errs
             r.abort()
     pg.route("**/*", route or default_route)
     if errs is not None:
-        pg.on("pageerror", lambda e: errs.append("pageerror: " + str(e)))
+        pg.on("pageerror", lambda e: errs.append("pageerror: " + str(e) + " | " + (getattr(e, "stack", "") or "")[:400].replace("\n", " ← ")))
         pg.on("console", lambda m: errs.append("console: " + m.text) if m.type == "error" and "ERR_FAILED" not in m.text else None)
     return pg
 
@@ -77,6 +77,7 @@ TELEPORT_JS = """async()=>{ const s=window.__dc_game.scene.scenes[0], kids=s.chi
           const pl=kids.find(c=>c.texture&&c.texture.key==='vanberto_open'), door=kids.find(c=>/^door/.test((c.texture||{}).key||''));
           const items=kids.filter(c=>c.texture&&/^item_(estrela|medalha|chip)$/.test(c.texture.key)&&c.body);
           const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+          if(window.__vb_test&&window.__vb_test.unlockGoal) window.__vb_test.unlockGoal();   // níveis com «partir tudo»: destranca a porta
           for(const it of items){ pl.body.reset(it.x,it.y); await sleep(120); }
           await sleep(700); pl.body.reset(door.x,door.y); await sleep(400); }"""
 
@@ -155,6 +156,44 @@ with sync_playwright() as p:
         assert before == ["mundo3_n10e11", "sala_secreta"], f"antes de jogar: {before}"
         assert later == ["mundo3_n12e13", "mundo3_n14e15"], f"depois: {later}"
         assert not errs, errs[:3]; pg.context.close(); return f"{before} e depois {later}"
+
+    @test("Partir coisas: no nível 3 a porta fica trancada até se partirem os 4 carimbos (cabeçada)")
+    def _():
+        import json as _json
+        errs = []; pg = new_page(B, errs=errs)
+        save = {"map": {"highestLevelReached": 2, "levelsCompleted": [0, 1]}}
+        pg.add_init_script("localStorage.setItem('vanbertos_abril_save_v1', %s)" % _json.dumps(_json.dumps(save)))
+        pg.goto(BASE + "/index.html", wait_until="networkidle"); pg.wait_for_timeout(600)
+        open_map(pg); pg.click(".map-region--current")
+        pg.wait_for_selector(".level-node--current"); pg.click(".level-node--current")
+        pg.wait_for_selector("canvas", timeout=20000)
+        for _ in range(12):                               # fecha os cartões até a física arrancar
+            pg.wait_for_timeout(800)
+            el = pg.query_selector("#btnHistory")
+            if el and el.is_visible():
+                try: el.click(timeout=800)
+                except Exception: pass
+        wait_js(pg, "!window.__dc_game.scene.scenes[0].physics.world.isPaused", 20000)
+        K = "window.__dc_game.scene.scenes[0].children.list"
+        PL = K + ".find(c=>c.getData&&c.getData('usingPng')!==undefined)"
+        BL = K + ".filter(c=>c.active&&c.texture&&/^brk_/.test(c.texture.key))"
+        n0 = pg.evaluate("(()=>%s.length)()" % BL)
+        assert n0 == 4, f"esperava 4 carimbos no nível 3, há {n0}"
+        # porta trancada: ir à porta não abre a pergunta
+        pg.evaluate("(()=>{const pl=%s,d=%s.find(c=>/^door/.test((c.texture||{}).key||''));pl.body.reset(d.x,d.y);})()" % (PL, K))
+        pg.wait_for_timeout(2500)
+        assert not pg.query_selector("#quizOverlay:not(.hidden)"), "a pergunta abriu com a porta trancada"
+        # partir os 4 com cabeçada (o jogador é posto de pé por baixo de cada bloco e salta)
+        pg.evaluate("""async()=>{const k=%s,pl=%s,sleep=ms=>new Promise(r=>setTimeout(r,ms));
+          let n=0; while(%s.length && n<20){ const b=%s[0];
+            k.filter(c=>c.texture&&/^(vilao_|drone_hostil)/.test(c.texture.key)).forEach(c=>c.destroy());
+            pl.body.reset(b.x,b.y+52); pl.body.setVelocity(0,0); await sleep(450); pl.body.setVelocityY(-650); await sleep(520); n++; } }""" % (K, PL, BL, BL))
+        left = pg.evaluate("(()=>%s.length)()" % BL)
+        assert left == 0, f"ainda restam {left} blocos depois das cabeçadas"
+        pg.evaluate("(()=>{const pl=%s,d=%s.find(c=>/^door/.test((c.texture||{}).key||''));pl.body.reset(d.x,d.y);})()" % (PL, K))
+        wait_js(pg, "!!document.querySelector('#quizOverlay:not(.hidden)')", 15000)
+        assert not errs, errs[:3]; pg.context.close()
+        return "4 carimbos partidos por cabeçada; porta trancada → aberta"
 
     def complete_level(pg):
         """Apanha os itens, vai ao portal, responde certo ao quiz e carrega em Continuar (volta ao mapa)."""
@@ -281,9 +320,9 @@ with sync_playwright() as p:
     @test("Vitória e Certificado: mesmos pontos, mesma percentagem, medalhas coerentes e erros de toda a aventura")
     def _():
         save = {"globalStats": {"quizTotal": 27, "quizCorrect": 17, "quizWrong": 10, "totalScoreEarned": 10225, "quizErrors": [
-                    {"level": "Nível 3", "theme": "phishing", "q": "O que é o phishing?", "wrong": "Um programa que protege as contas", "correct": "Tentar enganar alguém para lhe roubar dados"},
-                    {"level": "Nível 7", "theme": "phishing", "q": "Como reconhecer phishing?", "wrong": "A", "correct": "B"},
-                    {"level": "Nível 19", "theme": "direitos_digitais", "q": "O que são direitos digitais?", "wrong": "C", "correct": "D"}]},
+                    {"level": "Nível 3", "theme": "censura", "q": "O que fazia a censura?", "wrong": "Corrigia os erros dos jornais", "correct": "Cortava o que o regime não queria que se soubesse"},
+                    {"level": "Nível 7", "theme": "censura", "q": "Que objeto simbolizava a censura?", "wrong": "A", "correct": "B"},
+                    {"level": "Nível 19", "theme": "abril_hoje", "q": "Como se chama o 25 de Abril?", "wrong": "C", "correct": "D"}]},
                 "stars": {str(i): {"allItems": True, "noDamage": i < 14, "firstTry": i < 14} for i in range(20)}}
         pg, errs = open_victory(save)
         rows = pg.evaluate("[...document.querySelectorAll('#winThemeTable tr')].slice(1).map(r=>parseInt(r.children[1].textContent))")
@@ -492,7 +531,7 @@ with sync_playwright() as p:
         pg.wait_for_selector("canvas", timeout=15000); dismiss_cards(pg, 6); pg.wait_for_timeout(800)
         door_q = pg.evaluate("""async(stamp)=>{
             const quiz = await import('./game/quiz.js?v='+stamp);
-            return quiz.pickQuizForLevel(4, 'virus_malware').q;   // simula a pergunta à porta do nível 5 (tema do 1.º boss)
+            return quiz.pickQuizForLevel(4, 'censura').q;   // simula a pergunta à porta do nível 5 (tema do 1.º boss)
         }""", STAMP)
         pg.evaluate("(a)=>window.__vb_test.startBoss(a)", 4)
         for _ in range(40):

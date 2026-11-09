@@ -7,20 +7,20 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { hitFlash } from "./dom.js?v=20261108v4";
-import { applyHitStop, showFloat } from "./feedback.js?v=20261108v4";
-import { showGameOver } from "./flow.js?v=20261108v4";
-import { clearPower, setInvuln } from "./items.js?v=20261108v4";
-import { updateHearts } from "./level.js?v=20261108v4";
-import { saveGame } from "./overlays.js?v=20261108v4";
-import { snapPlayerToGround } from "./rooms.js?v=20261108v4";
-import { _critterSession, _overlayPaused, awaitingQuiz, balloons, collectedItemIndices, collectedRoomPipes, critters, currentLevel, currentSign, decorativePipes, extraShieldCounted, getVillainSpeedMult, hazards, invuln, isStarAllowedExtremo, itemCountText, itemsCollected, itemsGroup, itemsTotal, lives, livesLostThisLevel, malwareGroup, movingPlatforms, pausedByTeacher, pipeHintSign, player, powered, sceneRef, secretDoors, secretSigns, set__critterSession, set__hudDirty, set_awaitingQuiz, set_balloons, set_critters, set_currentSign, set_extraShieldCounted, set_hazards, set_invuln, set_itemsCollected, set_itemsTotal, set_lives, set_livesLostThisLevel, set_movingPlatforms, set_pipeHintSign, set_secretDoors, set_secretSigns, set_trampolines, tipText, touch, trampolines } from "./state.js?v=20261108v4";
-import { triggerVanBertoSad } from "./vanberto.js?v=20261108v4";
-import { THEMES, LEVELS } from "../data-levels.js?v=20261108v4";
-import { makePlatformTextureThemed } from "../textures.js?v=20261108v4";
-import { ensureAudio, SFX, beep } from "../audio.js?v=20261108v4";
-import { onSecretFoundForAchievements } from "../achievements.js?v=20261108v4";
-import { NPC_SIGNS } from "../data-story.js?v=20261108v4";
+import { hitFlash } from "./dom.js?v=20261109v5";
+import { applyHitStop, showFloat } from "./feedback.js?v=20261109v5";
+import { showGameOver } from "./flow.js?v=20261109v5";
+import { clearPower, setInvuln } from "./items.js?v=20261109v5";
+import { updateHearts } from "./level.js?v=20261109v5";
+import { saveGame } from "./overlays.js?v=20261109v5";
+import { snapPlayerToGround } from "./rooms.js?v=20261109v5";
+import { _critterSession, _overlayPaused, awaitingQuiz, balloons, collectedItemIndices, collectedRoomPipes, critters, currentLevel, currentSign, decorativePipes, extraShieldCounted, getVillainSpeedMult, hazards, invuln, isStarAllowedExtremo, itemCountText, itemsCollected, itemsGroup, itemsTotal, lives, livesLostThisLevel, malwareGroup, movingPlatforms, pausedByTeacher, pipeHintSign, player, powered, sceneRef, secretDoors, secretSigns, set__critterSession, set__hudDirty, set_awaitingQuiz, set_balloons, set_critters, set_currentSign, set_extraShieldCounted, set_hazards, set_invuln, set_itemsCollected, set_itemsTotal, set_lives, set_livesLostThisLevel, set_movingPlatforms, set_pipeHintSign, set_secretDoors, set_secretSigns, set_trampolines, tipText, touch, trampolines } from "./state.js?v=20261109v5";
+import { triggerVanBertoSad } from "./vanberto.js?v=20261109v5";
+import { THEMES, LEVELS } from "../data-levels.js?v=20261109v5";
+import { makePlatformTextureThemed } from "../textures.js?v=20261109v5";
+import { ensureAudio, SFX, beep } from "../audio.js?v=20261109v5";
+import { onSecretFoundForAchievements } from "../achievements.js?v=20261109v5";
+import { NPC_SIGNS } from "../data-story.js?v=20261109v5";
 
 // ===== Balões flutuantes apanháveis =====
 
@@ -634,7 +634,7 @@ export function updateSecrets(scene) {
     // ── Texto MUITO MAIOR e mais visível ──────────────────────
     const lbl = scene.add.text(s.x, s.y-60, "🔍 SEGREDO!", {
       fontSize:"26px", fontStyle:"900", color:"#ffd700",
-      stroke:"#200040", strokeThickness:7
+      stroke:"#07210f", strokeThickness:7
     }).setOrigin(0.5).setDepth(200).setAlpha(0).setScale(0.5);
     scene.tweens.add({ targets:lbl, alpha:1, scaleX:1.3, scaleY:1.3, y:s.y-100,
       duration:300, ease:"Back.easeOut",
@@ -721,7 +721,7 @@ function _createSignAt(scene, x, y, emoji, text) {
   }).setOrigin(0.5).setDepth(2);
   scene.tweens.add({ targets:obj, y:y-8, duration:1100, yoyo:true, repeat:-1, ease:"Sine.easeInOut" });
   const badge = scene.add.text(x+16, y-22, "!", {
-    fontSize:"15px", fontStyle:"900", color:"#ffe060", stroke:"#200040", strokeThickness:4,
+    fontSize:"15px", fontStyle:"900", color:"#ffe060", stroke:"#07210f", strokeThickness:4,
     padding:{ x:6, y:6 }
   }).setOrigin(0.5).setDepth(3);
   scene.tweens.add({ targets:badge, scaleX:{from:0.8,to:1.15}, scaleY:{from:0.8,to:1.15}, duration:520, yoyo:true, repeat:-1, ease:"Sine.easeInOut" });

@@ -7,22 +7,23 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { clearMiniViruses, clearPopupHazard, clearToxicZones, doBossBlink, doBossHop, doBossIdleArms, doBossIdleBlink, doBossRollQmark, doBossSmokePuff, doBossTeleport, doBossThrowBook, maintainMiniViruses, spawnMiniViruses, spawnPopupHazard, spawnToxicZones, stopPhishingDecoy } from "./boss-attacks.js?v=20261108v4";
-import { bossDialogueAnchor, playBossDialogue, vbDialogueAnchor } from "./dialogue.js?v=20261108v4";
-import { quizOverlay } from "./dom.js?v=20261108v4";
-import { showFloat } from "./feedback.js?v=20261108v4";
-import { clearDoubleJump, clearPower, clearStarPower, setInvuln } from "./items.js?v=20261108v4";
-import { clearExtremoAllies } from "./level.js?v=20261108v4";
-import { applyBackground, bgKeyForLevel } from "./map.js?v=20261108v4";
-import { snapPlayerToGround } from "./rooms.js?v=20261108v4";
-import { _critterSession, balloons, bossLockIcon, bossOverlay, bossRageIcon, bossState, bossTimers, bossVignette, critters, currentLevel, door, enemyTimers, getBossExtraHp, getBossSpeedMult, hudText, inBossFight, itemCountText, itemsGroup, malwareGroup, pipeExitDecor, platforms, player, set__critterSession, set__doorAnimRunning, set_awaitingQuiz, set_awaitingStory, set_balloons, set_bossLockIcon, set_bossOverlay, set_bossRageIcon, set_bossState, set_bossTimers, set_bossVignette, set_controlsInvertedUntil, set_critters, set_door, set_enemyTimers, set_inBossFight, set_invuln, set_pipeExitDecor, tipText } from "./state.js?v=20261108v4";
-import { clearMovingPlatforms, clearSign, clearTrampolines, spawnBossSign, spawnMovingPlatforms } from "./world.js?v=20261108v4";
-import { BOSS_BY_LEVEL } from "../data-bosses.js?v=20261108v4";
-import { clearPlatformDecor } from "../background.js?v=20261108v4";
-import { LEVELS, THEMES } from "../data-levels.js?v=20261108v4";
-import { makePlatformTextureThemed } from "../textures.js?v=20261108v4";
-import { ensureAudio, SFX, beep } from "../audio.js?v=20261108v4";
-import { BOSS_OBJECTIVE, BOSS_INTRO_VB, BOSS_HP_TAUNTS } from "../data-story.js?v=20261108v4";
+import { clearMiniViruses, clearPopupHazard, clearToxicZones, doBossBlink, doBossHop, doBossIdleArms, doBossIdleBlink, doBossRollQmark, doBossSmokePuff, doBossTeleport, doBossThrowBook, maintainMiniViruses, spawnMiniViruses, spawnPopupHazard, spawnToxicZones, stopPhishingDecoy } from "./boss-attacks.js?v=20261109v5";
+import { bossDialogueAnchor, playBossDialogue, vbDialogueAnchor } from "./dialogue.js?v=20261109v5";
+import { quizOverlay } from "./dom.js?v=20261109v5";
+import { showFloat } from "./feedback.js?v=20261109v5";
+import { clearDoubleJump, clearPower, clearStarPower, setInvuln } from "./items.js?v=20261109v5";
+import { clearExtremoAllies } from "./level.js?v=20261109v5";
+import { applyBackground, bgKeyForLevel } from "./map.js?v=20261109v5";
+import { snapPlayerToGround } from "./rooms.js?v=20261109v5";
+import { _critterSession, balloons, bossLockIcon, bossOverlay, bossRageIcon, bossState, bossTimers, bossVignette, critters, currentLevel, door, enemyTimers, getBossExtraHp, getBossSpeedMult, hudText, inBossFight, itemCountText, itemsGroup, malwareGroup, pipeExitDecor, platforms, player, set__critterSession, set__doorAnimRunning, set_awaitingQuiz, set_awaitingStory, set_balloons, set_bossLockIcon, set_bossOverlay, set_bossRageIcon, set_bossState, set_bossTimers, set_bossVignette, set_controlsInvertedUntil, set_critters, set_door, set_enemyTimers, set_inBossFight, set_invuln, set_pipeExitDecor, tipText } from "./state.js?v=20261109v5";
+import { clearBreakables } from "./breakables.js?v=20261109v5";
+import { clearMovingPlatforms, clearSign, clearTrampolines, spawnBossSign, spawnMovingPlatforms } from "./world.js?v=20261109v5";
+import { BOSS_BY_LEVEL } from "../data-bosses.js?v=20261109v5";
+import { clearPlatformDecor } from "../background.js?v=20261109v5";
+import { LEVELS, THEMES } from "../data-levels.js?v=20261109v5";
+import { makePlatformTextureThemed } from "../textures.js?v=20261109v5";
+import { ensureAudio, SFX, beep } from "../audio.js?v=20261109v5";
+import { BOSS_OBJECTIVE, BOSS_INTRO_VB, BOSS_HP_TAUNTS } from "../data-story.js?v=20261109v5";
 
 
 // =====================================================================
@@ -163,6 +164,7 @@ export function startBossFight(scene, levelJustCompleted, onComplete) {
   platforms.clear(true,true); itemsGroup.clear(true,true); malwareGroup.clear(true,true);
   pipeExitDecor.forEach(o=>{try{o.destroy();}catch{}}); set_pipeExitDecor([]);
   clearMovingPlatforms();
+  clearBreakables(); // blocos do nível não passam para a arena do boss
   clearTrampolines(); // sem isto, um trampolim do nível anterior ficava "pendurado" na arena do boss
   // Decorações do nível anterior (cadeados, pacotes de dados/drones, sinais nas plataformas) —
   // sem isto ficavam por destruir e continuavam visíveis/a voar durante o boss.

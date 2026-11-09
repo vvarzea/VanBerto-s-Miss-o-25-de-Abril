@@ -7,17 +7,17 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { collectedBossRights, saveBossRights } from "./artefacts.js?v=20261108v4";
-import { clearMiniViruses, clearPopupHazard, clearToxicZones, stopPhishingDecoy } from "./boss-attacks.js?v=20261108v4";
-import { destroyBossHpBar, showBossBanner } from "./boss-core.js?v=20261108v4";
-import { bossDialogueAnchor, playBossDialogue, vbDialogueAnchor } from "./dialogue.js?v=20261108v4";
-import { clearExtremoAllies } from "./level.js?v=20261108v4";
-import { pickQuizForLevel, showQuiz } from "./quiz.js?v=20261108v4";
-import { bossLockIcon, bossOverlay, bossRageIcon, bossState, bossVignette, currentLevel, hudText, itemCountText, player, sceneRef, set__doorAnimRunning, set_awaitingQuiz, set_bossLockIcon, set_bossOverlay, set_bossRageIcon, set_bossState, set_bossVignette, set_inBossFight, tipText } from "./state.js?v=20261108v4";
-import { playVanBertoDance } from "./vanberto.js?v=20261108v4";
-import { ensureAudio, SFX, beep } from "../audio.js?v=20261108v4";
-import { showAchievementToast } from "../achievements.js?v=20261108v4";
-import { BOSS_VICTORY_VB } from "../data-story.js?v=20261108v4";
+import { collectedBossRights, saveBossRights } from "./artefacts.js?v=20261109v5";
+import { clearMiniViruses, clearPopupHazard, clearToxicZones, stopPhishingDecoy } from "./boss-attacks.js?v=20261109v5";
+import { destroyBossHpBar, showBossBanner } from "./boss-core.js?v=20261109v5";
+import { bossDialogueAnchor, playBossDialogue, vbDialogueAnchor } from "./dialogue.js?v=20261109v5";
+import { clearExtremoAllies } from "./level.js?v=20261109v5";
+import { pickQuizForLevel, showQuiz } from "./quiz.js?v=20261109v5";
+import { bossLockIcon, bossOverlay, bossRageIcon, bossState, bossVignette, currentLevel, hudText, itemCountText, player, sceneRef, set__doorAnimRunning, set_awaitingQuiz, set_bossLockIcon, set_bossOverlay, set_bossRageIcon, set_bossState, set_bossVignette, set_inBossFight, tipText } from "./state.js?v=20261109v5";
+import { playVanBertoDance } from "./vanberto.js?v=20261109v5";
+import { ensureAudio, SFX, beep } from "../audio.js?v=20261109v5";
+import { showAchievementToast } from "../achievements.js?v=20261109v5";
+import { BOSS_VICTORY_VB } from "../data-story.js?v=20261109v5";
 
 // ===== Flourish de vitória próprio de cada boss — Fase "Batalhas Épicas" =====
 // Substitui/complementa o confetti genérico por algo ligado ao tema do boss
@@ -215,7 +215,7 @@ function spawnBossPortal(scene, onEnter, def) {
     x:px, y:py, speed:{min:20,max:60}, lifespan:900, quantity:1, frequency:120,
     scale:{start:0.7,end:0}, tint:[color,0xffd700,0xffffff]
   });
-  const lbl = scene.add.text(px, py-88, "🚪 Porta!", { fontSize:"16px", fontStyle:"900", color:"#e0c8ff", stroke:"#200040", strokeThickness:5 }).setOrigin(0.5).setDepth(20);
+  const lbl = scene.add.text(px, py-88, "🚪 Porta!", { fontSize:"16px", fontStyle:"900", color:"#e0c8ff", stroke:"#07210f", strokeThickness:5 }).setOrigin(0.5).setDepth(20);
   scene.tweens.add({ targets:lbl, y:py-98, duration:900, yoyo:true, repeat:-1, ease:"Sine.easeInOut" });
 
   let triggered = false;

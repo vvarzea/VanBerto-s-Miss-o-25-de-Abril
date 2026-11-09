@@ -708,3 +708,29 @@ export const LEVELS = [
     ]
   },
 ];
+
+// ===== Objetos para PARTIR (ver game/breakables.js) =====
+// kind: caixa | carimbo | escuta | interf | barricada | grade | muro.
+// goal:true → conta para o objetivo do nível: a porta fica trancada até todos serem partidos.
+// Partem-se com uma cabeçada (saltar por baixo), com ↓ em cima, ou a atropelar com o cravo dourado/punho.
+const BREAKABLES = {
+  1: [{kind:"caixa",x:825,y:341}, {kind:"caixa",x:1385,y:201}, {kind:"caixa",x:2070,y:341}],  // nível 2
+  2: [{kind:"carimbo",x:815,y:351,goal:true}, {kind:"carimbo",x:1255,y:281,goal:true}, {kind:"carimbo",x:1595,y:211,goal:true}, {kind:"carimbo",x:2125,y:351,goal:true}],  // nível 3 — objetivo: trancam a porta
+  3: [{kind:"caixa",x:1855,y:351}, {kind:"caixa",x:2285,y:331}, {kind:"caixa",x:2675,y:408}],  // nível 4
+  4: [{kind:"caixa",x:815,y:341}, {kind:"caixa",x:1220,y:271}, {kind:"caixa",x:2680,y:408}],  // nível 5
+  5: [{kind:"escuta",x:1305,y:351,goal:true}, {kind:"escuta",x:1755,y:301,goal:true}, {kind:"escuta",x:2385,y:408,goal:true}],  // nível 6 — objetivo: trancam a porta
+  6: [{kind:"caixa",x:955,y:321}, {kind:"caixa",x:1715,y:311}, {kind:"caixa",x:2350,y:301}],  // nível 7
+  7: [{kind:"caixa",x:810,y:311}, {kind:"caixa",x:2020,y:341}, {kind:"caixa",x:2770,y:408}],  // nível 8
+  8: [{kind:"caixa",x:1153,y:259}],  // nível 9
+  9: [{kind:"caixa",x:935,y:408}, {kind:"caixa",x:1935,y:251}, {kind:"caixa",x:2940,y:408}],  // nível 10
+  10: [{kind:"interf",x:825,y:341,goal:true}, {kind:"interf",x:1090,y:281,goal:true}, {kind:"interf",x:1735,y:221,goal:true}],  // nível 11 — objetivo: trancam a porta
+  11: [{kind:"barricada",x:1205,y:331,goal:true}, {kind:"barricada",x:1875,y:331,goal:true}, {kind:"barricada",x:3060,y:408,goal:true}],  // nível 12 — objetivo: trancam a porta
+  12: [{kind:"caixa",x:815,y:291}, {kind:"caixa",x:1980,y:311}, {kind:"caixa",x:3040,y:211}],  // nível 13
+  13: [{kind:"caixa",x:1890,y:331}, {kind:"caixa",x:2410,y:331}],  // nível 14
+  14: [{kind:"grade",x:815,y:408,goal:true}, {kind:"grade",x:1785,y:241,goal:true}, {kind:"grade",x:2345,y:241,goal:true}, {kind:"grade",x:3000,y:408,goal:true}],  // nível 15 — objetivo: trancam a porta
+  15: [{kind:"caixa",x:935,y:408}, {kind:"caixa",x:2190,y:261}, {kind:"caixa",x:3100,y:281}],  // nível 16
+  16: [{kind:"caixa",x:813,y:311}, {kind:"caixa",x:1945,y:261}, {kind:"caixa",x:3230,y:408}],  // nível 17
+  18: [{kind:"caixa",x:825,y:321}, {kind:"caixa",x:2105,y:251}, {kind:"caixa",x:3245,y:408}],  // nível 19
+  19: [{kind:"muro",x:820,y:331,goal:true}, {kind:"muro",x:1570,y:171,goal:true}, {kind:"muro",x:2620,y:151,goal:true}, {kind:"muro",x:3395,y:321,goal:true}],  // nível 20 — objetivo: trancam a porta
+};
+LEVELS.forEach((L, i) => { if (BREAKABLES[i]) L.breakables = BREAKABLES[i]; });

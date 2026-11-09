@@ -20,6 +20,7 @@ function rrPath(ctx,x,y,w,h,r){
   ctx.closePath();
 }
 export function makeTextures(scene){
+  makeBreakableTextures(scene);
   makePlatformTexture(scene);
   makeDoorTexture(scene);
   makeVilaosTextures(scene);
@@ -1245,4 +1246,88 @@ function makeVanBertoTexture(scene,key,blink,step,armsUp){
   drawCarnation(ctx,33,56,7,{hi:"#ff6a7a",lo:"#d9102a",stroke:"#7a0014"},true);
   ctx.restore();
   tex.refresh();
+}
+
+// ===== Objetos para PARTIR (ver game/breakables.js) =====
+// 7 tipos, 44×44, cada um com a versão intacta («brk_<tipo>») e a rachada («brk_<tipo>_cr»,
+// usada pelos que aguentam 2 pancadas: barricada, grade e muro).
+function makeBreakableTextures(scene){
+  const S=44;
+  const mk=(key,draw)=>{
+    if(scene.textures.exists(key)) return;
+    const tex=scene.textures.createCanvas(key,S,S), ctx=tex.getContext();
+    ctx.lineJoin="round"; ctx.lineCap="round";
+    draw(ctx); tex.refresh();
+  };
+  const cracks=(ctx)=>{
+    ctx.strokeStyle="rgba(20,10,0,0.85)"; ctx.lineWidth=2.2;
+    ctx.beginPath(); ctx.moveTo(22,3); ctx.lineTo(18,14); ctx.lineTo(25,22); ctx.lineTo(17,32); ctx.lineTo(21,41);
+    ctx.moveTo(25,22); ctx.lineTo(37,27); ctx.moveTo(18,14); ctx.lineTo(7,11); ctx.stroke();
+    ctx.strokeStyle="rgba(255,255,255,0.35)"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(23,4); ctx.lineTo(19,15); ctx.lineTo(26,23); ctx.stroke();
+  };
+  const frame=(ctx,fill1,fill2,line)=>{
+    const g=ctx.createLinearGradient(0,0,0,S); g.addColorStop(0,fill1); g.addColorStop(1,fill2);
+    ctx.fillStyle=g; rrPath(ctx,2,2,S-4,S-4,5); ctx.fill(); ctx.strokeStyle=line; ctx.lineWidth=2.4; ctx.stroke();
+    ctx.fillStyle="rgba(255,255,255,0.22)"; ctx.fillRect(5,4,S-10,3);
+  };
+
+  // 📦 Caixa de madeira (propaganda / mantimentos)
+  mk("brk_caixa",ctx=>{
+    frame(ctx,"#d9a05a","#a9692c","#4a2a0c");
+    ctx.strokeStyle="#6a3d14"; ctx.lineWidth=2.6;
+    ctx.beginPath(); ctx.moveTo(7,7); ctx.lineTo(S-7,S-7); ctx.moveTo(S-7,7); ctx.lineTo(7,S-7); ctx.stroke();
+    ctx.strokeStyle="rgba(60,30,5,0.5)"; ctx.lineWidth=1.4; ctx.strokeRect(8,8,S-16,S-16);
+    ctx.fillStyle="#f2d36a"; for(const [x,y] of [[6,6],[S-6,6],[6,S-6],[S-6,S-6]]){ ctx.beginPath(); ctx.arc(x,y,1.8,0,Math.PI*2); ctx.fill(); }
+  });
+  // 🟥 Carimbo «CENSURADO»
+  mk("brk_carimbo",ctx=>{
+    frame(ctx,"#ee4a46","#b01d22","#4a0408");
+    ctx.strokeStyle="#fff"; ctx.lineWidth=2; rrPath(ctx,7,7,S-14,S-14,3); ctx.stroke();
+    ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(13,13); ctx.lineTo(S-13,S-13); ctx.moveTo(S-13,13); ctx.lineTo(13,S-13); ctx.stroke();
+  });
+  // 🎙️ Escuta escondida (caixa metálica com microfone)
+  mk("brk_escuta",ctx=>{
+    frame(ctx,"#8a95a6","#4e5868","#1c222c");
+    ctx.fillStyle="#12161d"; rrPath(ctx,15,8,14,17,7); ctx.fill();
+    ctx.strokeStyle="#c9d2e0"; ctx.lineWidth=1.2; for(let i=0;i<4;i++){ ctx.beginPath(); ctx.moveTo(17,11+i*3.6); ctx.lineTo(27,11+i*3.6); ctx.stroke(); }
+    ctx.strokeStyle="#12161d"; ctx.lineWidth=2.4; ctx.beginPath(); ctx.arc(22,22,10,0.15*Math.PI,0.85*Math.PI); ctx.moveTo(22,32); ctx.lineTo(22,37); ctx.moveTo(15,37); ctx.lineTo(29,37); ctx.stroke();
+    ctx.fillStyle="#ff5a5a"; ctx.beginPath(); ctx.arc(35,9,2.2,0,Math.PI*2); ctx.fill();
+  });
+  // 📡 Interferência (bloco escuro com relâmpago e ruído)
+  mk("brk_interf",ctx=>{
+    frame(ctx,"#3b4660","#1c2438","#0a0e1a");
+    ctx.strokeStyle="rgba(150,190,255,0.35)"; ctx.lineWidth=1.2;
+    for(let i=0;i<6;i++){ ctx.beginPath(); ctx.moveTo(6,9+i*5.5); for(let x=6;x<=S-6;x+=4) ctx.lineTo(x,9+i*5.5+((x/4+i)%2?2:-2)); ctx.stroke(); }
+    ctx.fillStyle="#ffe14a"; ctx.strokeStyle="#7a5a00"; ctx.lineWidth=1.6;
+    ctx.beginPath(); ctx.moveTo(25,5); ctx.lineTo(13,24); ctx.lineTo(21,24); ctx.lineTo(17,39); ctx.lineTo(32,18); ctx.lineTo(23,18); ctx.closePath(); ctx.fill(); ctx.stroke();
+  });
+  // 🚧 Barricada (sacos de areia + cavaletes) — 2 pancadas
+  const barr=(ctx,cr)=>{
+    frame(ctx,"#cdb583","#9a8250","#4a3a1c");
+    ctx.fillStyle="#b89a5c"; ctx.strokeStyle="#5a4520"; ctx.lineWidth=1.6;
+    for(const [x,y,w] of [[5,24,17],[23,24,16],[10,13,18],[28,13,12],[5,34,16],[23,34,17]]){ rrPath(ctx,x,y,w,9,4); ctx.fill(); ctx.stroke(); }
+    ctx.strokeStyle="#4a4a52"; ctx.lineWidth=4; ctx.beginPath(); ctx.moveTo(8,6); ctx.lineTo(36,40); ctx.moveTo(36,6); ctx.lineTo(8,40); ctx.stroke();
+    if(cr) cracks(ctx);
+  };
+  mk("brk_barricada",ctx=>barr(ctx,false)); mk("brk_barricada_cr",ctx=>barr(ctx,true));
+  // ⛓️ Grade de cela — 2 pancadas
+  const grade=(ctx,cr)=>{
+    frame(ctx,"#59606c","#2f343c","#101318");
+    ctx.strokeStyle="#c3cad6"; ctx.lineWidth=3.4;
+    for(let x=11;x<=33;x+=7.3){ ctx.beginPath(); ctx.moveTo(x,5); ctx.lineTo(x+(cr&&x>20?2.5:0),S-5); ctx.stroke(); }
+    ctx.strokeStyle="#8a93a2"; ctx.lineWidth=3; ctx.beginPath(); ctx.moveTo(5,15); ctx.lineTo(S-5,15); ctx.moveTo(5,29); ctx.lineTo(S-5,29); ctx.stroke();
+    ctx.fillStyle="#f2d36a"; ctx.strokeStyle="#7a5a10"; ctx.lineWidth=1.4; rrPath(ctx,17,20,10,9,2); ctx.fill(); ctx.stroke();
+    if(cr) cracks(ctx);
+  };
+  mk("brk_grade",ctx=>grade(ctx,false)); mk("brk_grade_cr",ctx=>grade(ctx,true));
+  // 🧱 Muro de tijolo — 2 pancadas
+  const muro=(ctx,cr)=>{
+    frame(ctx,"#c9743a","#8f4620","#3a1a08");
+    ctx.strokeStyle="rgba(50,20,5,0.55)"; ctx.lineWidth=1.6;
+    for(let r=0;r<4;r++){ const y=8+r*8.6; ctx.beginPath(); ctx.moveTo(4,y); ctx.lineTo(S-4,y); ctx.stroke();
+      const off=r%2?0:11; for(let x=4+off;x<S-4;x+=22){ ctx.beginPath(); ctx.moveTo(x,y); ctx.lineTo(x,y+8.6); ctx.stroke(); } }
+    ctx.fillStyle="rgba(255,255,255,0.78)"; ctx.font="bold 7px sans-serif"; ctx.textAlign="center"; ctx.fillText("ESQUECER",22,26);
+    if(cr) cracks(ctx);
+  };
+  mk("brk_muro",ctx=>muro(ctx,false)); mk("brk_muro_cr",ctx=>muro(ctx,true));
 }
