@@ -3289,3 +3289,18 @@ html, body { background: #0f5a30; }
   .start-robot { width: 84px; height: 84px; }
   .rotate-tip { margin: 0 0 2px; font-size: 11px; }
 }
+
+/* Estrelas ganhas a amarelo (com contorno verde-escuro, como o resto da interface) */
+.lc-star.lc-star--on {
+  color: #f7c600;
+  -webkit-text-stroke: 2px #0f2a1a;
+  paint-order: stroke fill;
+  text-shadow: 0 3px 0 #0f2a1a;
+}
+.level-node-star--on {
+  color: #f7c600;
+  -webkit-text-stroke: 1px #0f2a1a;
+  paint-order: stroke fill;
+}
+body.hc-mode .lc-star.lc-star--on,
+body.hc-mode .level-node-star--on { color: #f7c600 !important; }

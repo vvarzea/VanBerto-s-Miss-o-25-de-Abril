@@ -7,8 +7,8 @@
  * As variáveis de estado vivem em state.js; aqui alteram-se com set_<nome>().
  *************************************************/
 
-import { _vbTimer, bossState, player, sceneRef, set__vbTimer } from "./state.js?v=20261110v6";
-import { playCinematic } from "../cinematics.js?v=20261110v6";
+import { _vbTimer, bossState, player, sceneRef, set__vbTimer } from "./state.js?v=20261110v7";
+import { playCinematic } from "../cinematics.js?v=20261110v7";
 
 export function vbSay(text,type="intro",duration=3400){
   if(document.body.classList.contains("hc-mode"))return;
