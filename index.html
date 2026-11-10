@@ -18,7 +18,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-title" content="VanBerto's" />
   <title>VanBerto's — A Revolução dos Cravos</title>
-  <link rel="stylesheet" href="abril.css?v=20261109v5" />
+  <link rel="stylesheet" href="abril.css?v=20261110v6" />
 </head>
 <body>
 
@@ -27,13 +27,13 @@
        Registada o mais cedo possível (antes do Phaser e do resto do jogo), para apanhar também
        falhas durante o carregamento. Ver a explicação e os testes em abril.js / _dev/smoke.py.
   ═══════════════════════════════════════════ -->
-  <div id="fatalErrorOverlay" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(7,29,16,0.92);align-items:center;justify-content:center;padding:16px;font-family:'Baloo 2',sans-serif;">
-    <div style="max-width:420px;width:100%;background:#11472a;border:3px solid #ffd700;border-radius:14px;padding:22px 24px;text-align:center;color:#ffffff;box-shadow:0 0 40px rgba(224,32,54,0.4);">
+  <div id="fatalErrorOverlay" style="display:none;position:fixed;inset:0;z-index:99999;background:rgba(15,90,48,0.94);align-items:center;justify-content:center;padding:16px;font-family:'Baloo 2',sans-serif;">
+    <div style="max-width:420px;width:100%;background:#fffaf0;border:3px solid #0f2a1a;border-radius:14px;padding:22px 24px;text-align:center;color:#ffffff;box-shadow:6px 7px 0 #0f2a1a;">
       <div style="font-size:40px;margin-bottom:6px;">😵</div>
-      <h2 style="margin:0 0 8px;color:#ffd700;font-size:20px;">Ups, algo correu mal!</h2>
+      <h2 style="margin:0 0 8px;color:#15803d;font-size:20px;">Ups, algo correu mal!</h2>
       <p style="margin:0 0 6px;font-size:14px;line-height:1.5;">Não é culpa tua — o jogo encontrou um problema inesperado.</p>
       <p style="margin:0 0 16px;font-size:13px;line-height:1.5;opacity:0.85;">O teu progresso já está guardado neste dispositivo. Tenta recarregar; se acontecer sempre, pede a um adulto para avisar quem fez o jogo.</p>
-      <button id="btnFatalReload" style="font:inherit;font-weight:800;font-size:15px;padding:10px 22px;border-radius:10px;border:2px solid #ffd700;background:linear-gradient(180deg,#ff3d4d,#ff3546);color:#ffffff;cursor:pointer;">🔄 Recarregar o jogo</button>
+      <button id="btnFatalReload" style="font:inherit;font-weight:800;font-size:15px;padding:10px 22px;border-radius:10px;border:2px solid #0f2a1a;background:linear-gradient(180deg,#ff3d4d,#ff3546);color:#ffffff;cursor:pointer;">🔄 Recarregar o jogo</button>
       <p id="fatalErrorDetail" style="margin:14px 0 0;font-size:10px;opacity:0.5;word-break:break-word;"></p>
     </div>
   </div>
@@ -63,8 +63,8 @@
   ═══════════════════════════════════════════ -->
   <div id="startOverlay" class="overlay">
     <div class="card">
-      <div class="card-seal" aria-hidden="true">🌹</div>
-      <h1>🌹 VanBerto's — A Revolução dos Cravos</h1>
+      <img class="start-robot" src="vanberto_real.png" alt="VanBerto's, o robô" width="96" height="96" />
+      <h1>VanBerto's — A Revolução dos Cravos</h1>
       <p class="sub"><strong>Professora:</strong> Vanda Várzea</p>
       <p class="desc">
         Viaja no tempo com o VanBerto's e descobre a história do <strong>25 de Abril de 1974</strong>,
@@ -99,7 +99,7 @@
         <span class="hint-pc">PC: ← → para andar, ↑/Espaço para saltar e ↓/S para agachar.<br></span>
         Tablet/telemóvel: mantém o dedo no lado esquerdo/direito para andar e faz um toque rápido para saltar.
       </p>
-      <p class="tiny" id="versionTag" hidden aria-hidden="true" style="display:none !important;">Versão 20261109v5</p>
+      <p class="tiny" id="versionTag" hidden aria-hidden="true" style="display:none !important;">Versão 20261110v6</p>
     </div>
   </div>
 
@@ -194,7 +194,7 @@
       <div class="card-seal" aria-hidden="true">🏆</div>
       <h2>🏆 Conquistas</h2>
       <p class="map-progress-line">
-        Desbloqueadas: <span id="achievementsCounter" style="color:#ffd700;">0/7</span>
+        Desbloqueadas: <span id="achievementsCounter" style="color:#15803d;">0/7</span>
       </p>
       <div id="achievementsGrid" class="achievements-grid"><!-- preenchido via JS --></div>
       <div class="row">
@@ -211,7 +211,7 @@
       <div class="card-seal" aria-hidden="true">📖</div>
       <h2>📖 Álbum da Memória</h2>
       <p class="map-progress-line">
-        Coleção: <span id="albumProgressPct" style="color:#ffd700;">0%</span> concluída
+        Coleção: <span id="albumProgressPct" style="color:#15803d;">0%</span> concluída
       </p>
       <div class="map-progress-track"><div id="albumProgressFill" class="map-progress-fill"></div></div>
       <div id="albumGrid" class="album-grid"><!-- preenchido via JS --></div>
@@ -377,57 +377,57 @@
   <div id="howOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Como jogar">
     <div class="card" style="max-height:88dvh;overflow-y:auto;padding:18px 20px;">
       <h2 style="margin-bottom:4px;">Como jogar</h2>
-      <p style="font-size:11px;color:#ffd970;margin:0 0 12px;font-style:italic;">Lê com atenção antes de começar!</p>
+      <p style="font-size:11px;color:#166534;margin:0 0 12px;font-style:italic;">Lê com atenção antes de começar!</p>
 
       <!-- OBJETIVO -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 4px;">🎯 Objetivo</p>
-      <p style="font-size:12px;color:#ffd0d4;margin:0 0 10px;line-height:1.6;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 4px;">🎯 Objetivo</p>
+      <p style="font-size:12px;color:#0f2a1a;margin:0 0 10px;line-height:1.6;">
         Chega à <strong>porta 🚪</strong> no fim de cada nível. Quando chegares, aparece uma <strong>pergunta</strong> sobre o 25 de Abril — responde corretamente para avançar! O jogo tem <strong>20 níveis</strong>.
       </p>
 
       <!-- DIFICULDADE -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">🎯 Nível de Dificuldade</p>
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">🎯 Nível de Dificuldade</p>
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
-        <div style="background:rgba(0,160,0,0.12);border:1px solid rgba(80,200,80,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#ffd0d4;line-height:1.5;">
+        <div style="background:rgba(34,164,85,0.14);border:1px solid rgba(15,42,26,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#0f2a1a;line-height:1.5;">
           😊 <strong>Fácil</strong><br>
-          <span style="color:#b8ffb8;">Ritmo habitual — ideal para aprender a história.</span>
+          <span style="color:#166534;">Ritmo habitual — ideal para aprender a história.</span>
         </div>
-        <div style="background:rgba(255,53,70,0.14);border:1px solid rgba(255,80,95,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#ffd0d4;line-height:1.5;">
+        <div style="background:rgba(185,28,28,0.08);border:1px solid rgba(185,28,28,0.35);border-radius:8px;padding:7px 10px;font-size:12px;color:#0f2a1a;line-height:1.5;">
           🎓 <strong>Difícil</strong><br>
-          <span style="color:#ffd700;">Perguntas mais aprofundadas, censores/chefes mais rápidos, menos vidas.</span>
+          <span style="color:#15803d;">Perguntas mais aprofundadas, censores/chefes mais rápidos, menos vidas.</span>
         </div>
-        <div style="background:rgba(255,30,30,0.14);border:1px solid rgba(255,80,80,0.35);border-radius:8px;padding:7px 10px;font-size:12px;color:#ffd0d4;line-height:1.5;">
+        <div style="background:rgba(185,28,28,0.08);border:1px solid rgba(185,28,28,0.35);border-radius:8px;padding:7px 10px;font-size:12px;color:#0f2a1a;line-height:1.5;">
           🔥 <strong>Extremo</strong><br>
-          <span style="color:#ffb0b0;">Só 1 vida, censores/chefes ainda mais rápidos, quase sem cravo dourado.</span>
+          <span style="color:#991b1b;">Só 1 vida, censores/chefes ainda mais rápidos, quase sem cravo dourado.</span>
         </div>
       </div>
-      <p style="font-size:11px;color:#ffd970;margin:0 0 10px;font-style:italic;">
+      <p style="font-size:11px;color:#166534;margin:0 0 10px;font-style:italic;">
         💡 Podes escolher ou mudar isto a qualquer momento em Opções.
       </p>
 
       <!-- VILÕES -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">🔴 Os Censores — cuidado com cada tipo!</p>
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">🔴 Os Censores — cuidado com cada tipo!</p>
       <div style="display:flex;flex-direction:column;gap:6px;margin-bottom:10px;">
-        <div style="background:rgba(255,30,0,0.12);border:1px solid rgba(255,80,80,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#ffd0d4;line-height:1.5;">
+        <div style="background:rgba(185,28,28,0.08);border:1px solid rgba(185,28,28,0.35);border-radius:8px;padding:7px 10px;font-size:12px;color:#0f2a1a;line-height:1.5;">
           🔴 <strong>Carimbo</strong> — pequeno (o mais fácil)<br>
-          <span style="color:#ffa0a8;">Patrulha uma zona pequena em vai-e-vem. Lenta e previsível — boa para treinar!</span>
+          <span style="color:#991b1b;">Patrulha uma zona pequena em vai-e-vem. Lenta e previsível — boa para treinar!</span>
         </div>
-        <div style="background:rgba(0,60,220,0.14);border:1px solid rgba(80,130,255,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#ffd0d4;line-height:1.5;">
+        <div style="background:rgba(30,64,175,0.08);border:1px solid rgba(30,64,175,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#0f2a1a;line-height:1.5;">
           🔵 <strong>Lápis Azul</strong> — médio<br>
-          <span style="color:#b0c8ff;">Patrulha horizontalmente e salta de vez em quando. Mantém distância!</span>
+          <span style="color:#1e3a8a;">Patrulha horizontalmente e salta de vez em quando. Mantém distância!</span>
         </div>
-        <div style="background:rgba(0,160,0,0.12);border:1px solid rgba(80,200,80,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#ffd0d4;line-height:1.5;">
+        <div style="background:rgba(34,164,85,0.14);border:1px solid rgba(15,42,26,0.3);border-radius:8px;padding:7px 10px;font-size:12px;color:#0f2a1a;line-height:1.5;">
           🟢 <strong>Informador</strong> — grande (o mais perigoso)<br>
-          <span style="color:#a0ffb0;">Salta frequentemente e dirige-se ao jogador. Aparece nos níveis mais avançados — muito cuidado!</span>
+          <span style="color:#166534;">Salta frequentemente e dirige-se ao jogador. Aparece nos níveis mais avançados — muito cuidado!</span>
         </div>
       </div>
-      <p style="font-size:11px;color:#ffd970;margin:0 0 10px;font-style:italic;">
+      <p style="font-size:11px;color:#166534;margin:0 0 10px;font-style:italic;">
         💡 Se apanhares o cravo dourado 🌟, podes atropelar qualquer censor durante 8 segundos!
       </p>
 
       <!-- PARTIR COISAS -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">🔨 Parte coisas!</p>
-      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#ffd0d4;line-height:1.9;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">🔨 Parte coisas!</p>
+      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#0f2a1a;line-height:1.9;">
         <li>📦 <strong>Cabeçada:</strong> salta por baixo de uma caixa ou bloco para o partir</li>
         <li>⬇️ <strong>Pisão:</strong> sobe para cima do bloco e carrega em <kbd>↓</kbd> / agachar</li>
         <li>🌟 Com o cravo dourado ou o punho ✊ ativos, basta tocar-lhes</li>
@@ -435,8 +435,8 @@
       </ul>
 
       <!-- ITENS -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">🎁 O que apanhar</p>
-      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#ffd0d4;line-height:1.9;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">🎁 O que apanhar</p>
+      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#0f2a1a;line-height:1.9;">
         <li>🌟 <strong>Cravo dourado</strong> — ativa o <strong>super modo por 8s</strong>: atropela censores e ganha pontos!</li>
         <li>✊ <strong>Punho cerrado</strong> — fica maior e <strong>invencível por 8s</strong>; absorve um golpe de censor</li>
         <li>🕊️ <strong>Asas da pomba</strong> — permite <strong>saltar duas vezes</strong> no ar durante 10s (muito útil em plataformas altas!)</li>
@@ -444,47 +444,47 @@
         <li>🌹 <strong>Cravos / 📰 Jornais / 📻 Rádios</strong> — valem <strong>pontos bónus</strong></li>
         <li>❓ <strong>Ponto de interrogação</strong> — esconde um item surpresa! Passa por cima para revelar</li>
       </ul>
-      <p style="font-size:11px;color:#ffd970;margin:0 0 10px;font-style:italic;">
+      <p style="font-size:11px;color:#166534;margin:0 0 10px;font-style:italic;">
         💡 Se perderes uma vida, <strong>todos os itens voltam a aparecer</strong> — podes apanhá-los de novo!
       </p>
 
       <!-- PLATAFORMAS ESPECIAIS -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">🟡 Plataformas especiais</p>
-      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#ffd0d4;line-height:1.9;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">🟡 Plataformas especiais</p>
+      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#0f2a1a;line-height:1.9;">
         <li>↔ <strong>Setas horizontais</strong> — a plataforma move-se da esquerda para a direita</li>
         <li>↕ <strong>Setas verticais</strong> — a plataforma sobe e desce</li>
         <li>🟠 <strong>Trampolim</strong> — catapulta-te muito mais alto que um salto normal!</li>
       </ul>
 
       <!-- CANOS -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">🚇 Canos</p>
-      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#ffd0d4;line-height:1.9;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">🚇 Canos</p>
+      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#0f2a1a;line-height:1.9;">
         <li>Chega-te perto de um cano e carrega <strong>↓</strong> (ou <strong>S</strong>) para tentares um atalho!</li>
         <li>🎁 Alguns levam a uma <strong>sala secreta</strong>, com uma recompensa e uma curiosidade à espera</li>
         <li>Nem todos os canos são de entrar — alguns são só obstáculos, tens de lhes saltar por cima!</li>
       </ul>
 
       <!-- PONTUAÇÃO -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">⭐ Pontuação</p>
-      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#ffd0d4;line-height:1.9;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">⭐ Pontuação</p>
+      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#0f2a1a;line-height:1.9;">
         <li>✅ Resposta certa à primeira → <strong>+100 pontos por nível</strong></li>
         <li>🥇 Nível sem perder nenhuma vida → <strong>bónus +50 pontos</strong></li>
         <li>💥 Atropelar censor com o cravo dourado → <strong>+50 pontos por censor</strong></li>
       </ul>
 
       <!-- ESTRELAS COLECIONÁVEIS -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 6px;">⭐ Estrelas Colecionáveis (por nível)</p>
-      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#ffd0d4;line-height:1.9;">
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 6px;">⭐ Estrelas Colecionáveis (por nível)</p>
+      <ul style="margin:0 0 10px;padding-left:18px;font-size:12px;color:#0f2a1a;line-height:1.9;">
         <li>⭐ 1ª estrela — encontraste segredos escondidos no nível</li>
         <li>⭐ 2ª estrela — completaste sem perder nenhuma vida</li>
         <li>⭐ 3ª estrela — acertaste a pergunta à primeira tentativa</li>
       </ul>
 
       <!-- CONTROLOS -->
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:8px 0 4px;">🖥️ Controlos — PC / Teclado</p>
-      <p style="margin:2px 0 8px;font-size:12px;color:#ffd0d4;">← → para andar &nbsp;|&nbsp; ↑ ou Espaço para saltar &nbsp;|&nbsp; ↓ ou S para agachar &nbsp;|&nbsp; <strong style="color:#ffd700;">P</strong> — pausa &nbsp;|&nbsp; <strong style="color:#ffd700;">H</strong> — alto contraste &nbsp;|&nbsp; <strong style="color:#ffd700;">F</strong> — ecrã todo</p>
-      <p style="font-weight:700;font-size:13px;color:#ff3546;margin:4px 0 4px;">📱 Tablet / Telemóvel</p>
-      <p style="margin:2px 0 14px;font-size:12px;color:#ffd0d4;">Mantém o dedo no lado esquerdo/direito para andar · Toque rápido para saltar</p>
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:8px 0 4px;">🖥️ Controlos — PC / Teclado</p>
+      <p style="margin:2px 0 8px;font-size:12px;color:#0f2a1a;">← → para andar &nbsp;|&nbsp; ↑ ou Espaço para saltar &nbsp;|&nbsp; ↓ ou S para agachar &nbsp;|&nbsp; <strong style="color:#15803d;">P</strong> — pausa &nbsp;|&nbsp; <strong style="color:#15803d;">H</strong> — alto contraste &nbsp;|&nbsp; <strong style="color:#15803d;">F</strong> — ecrã todo</p>
+      <p style="font-weight:700;font-size:13px;color:#b91c1c;margin:4px 0 4px;">📱 Tablet / Telemóvel</p>
+      <p style="margin:2px 0 14px;font-size:12px;color:#0f2a1a;">Mantém o dedo no lado esquerdo/direito para andar · Toque rápido para saltar</p>
 
       <button id="btnCloseHow" class="btn primary" style="width:100%;">Entendido — vamos jogar! ▶</button>
     </div>
@@ -510,10 +510,10 @@
     <div id="playerNameHtml" style="
       display:none; align-self:center; margin-right:8px;
       font-family:'Baloo 2',sans-serif; font-size:17px; font-weight:900;
-      color:#ffd700; text-shadow:0 0 8px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.8);
+      color:#15803d; text-shadow:0 0 8px rgba(0,0,0,0.9), 0 2px 4px rgba(0,0,0,0.8);
       pointer-events:none; letter-spacing:0.3px;
       background:rgba(7,29,16,0.55); border-radius:8px; padding:4px 10px;
-      border:1px solid rgba(255,215,0,0.25); white-space:nowrap;
+      border:1px solid rgba(15,42,26,0.25); white-space:nowrap;
     "></div>
     <button id="btnTeacherMenu" class="btn" aria-label="Menu do jogo" title="Menu">☰ Menu</button>
     <!-- Botões fantasma — usados internamente pelo JS para compatibilidade -->
@@ -625,14 +625,14 @@
       <!-- PAINEL RELATÓRIO -->
       <div id="winPanelReport" class="win-panel active">
         <div id="winThemeErrors" style="display:none;margin:10px 0;">
-          <p style="font-weight:700;font-size:12px;color:#ffd700;margin:0 0 6px;">📊 Erros por tema</p>
-          <table id="winThemeTable" style="width:100%;border-collapse:collapse;font-size:11px;color:#ffd0d4;"></table>
+          <p style="font-weight:700;font-size:12px;color:#15803d;margin:0 0 6px;">📊 Erros por tema</p>
+          <table id="winThemeTable" style="width:100%;border-collapse:collapse;font-size:11px;color:#0f2a1a;"></table>
         </div>
         <button id="btnReviewMode" class="btn" style="display:none;margin-top:6px;">📋 Ver erros</button>
       </div>
       <!-- PAINEL COMPETÊNCIAS CONQUISTADAS -->
       <div id="winPanelRights" class="win-panel">
-        <p style="font-size:11px;color:#ff606d;margin:4px 0 8px;text-align:center;">🏅 As 20 Memórias que recuperaste</p>
+        <p style="font-size:11px;color:#b91c1c;margin:4px 0 8px;text-align:center;">🏅 As 20 Memórias que recuperaste</p>
         <div id="winRightsGrid" class="win-rights-grid"></div>
       </div>
       <!-- BOTÕES -->
@@ -814,7 +814,7 @@
   <div id="reviewOverlay" class="overlay hidden" role="dialog" aria-modal="true" aria-label="Revisão das perguntas erradas">
     <div class="card" style="max-height:88dvh;overflow-y:auto;padding:18px 20px;">
       <h2 style="margin-bottom:4px;">📋 Modo Revisão</h2>
-      <p style="font-size:12px;color:#ffd970;margin:0 0 14px;font-style:italic;">As perguntas que erraste — com a resposta certa e a explicação completa.</p>
+      <p style="font-size:12px;color:#166534;margin:0 0 14px;font-style:italic;">As perguntas que erraste — com a resposta certa e a explicação completa.</p>
       <div id="reviewList"></div>
       <div class="row">
         <button id="btnCloseReview" class="btn primary" style="width:100%;">✅ Entendido — fechar</button>
@@ -834,7 +834,7 @@
       }
     }
   </script>
-  <script src="phaser.min.js?v=20261109v5"></script>
-  <script type="module" src="abril.js?v=20261109v5"></script>
+  <script src="phaser.min.js?v=20261110v6"></script>
+  <script type="module" src="abril.js?v=20261110v6"></script>
 </body>
 </html>

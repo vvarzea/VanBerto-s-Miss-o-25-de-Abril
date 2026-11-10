@@ -12,12 +12,12 @@
 // Não mexe no motor de física: usa um grupo estático próprio + um collider com o jogador.
 // Os restantes níveis (sem `breakables`) ficam exatamente como estavam.
 
-import { beep, ensureAudio, SFX } from "../audio.js?v=20261109v5";
-import { showFloat } from "./feedback.js?v=20261109v5";
+import { beep, ensureAudio, SFX } from "../audio.js?v=20261110v6";
+import { showFloat } from "./feedback.js?v=20261110v6";
 import {
   awaitingQuiz, door, inSecretRoom, isCrouching, itemsGroup, player, powered,
   score, scoreText, set__hudDirty, set_score, starPower
-} from "./state.js?v=20261109v5";
+} from "./state.js?v=20261110v6";
 
 // Tipos: vida (nº de pancadas), pontos, textos e cores dos estilhaços.
 export const BREAK_KINDS = {
